@@ -11,7 +11,8 @@
                 "_UNICODE"
             ],
             "cppStandard": "c++11",
-            "compilerPath": "C:/MinGW/bin/g++.exe"
+            "compilerPath": "C:/MinGW/bin/g++.exe",
+            "cStandard": "c11"
         }
     ],
     "version": 4
