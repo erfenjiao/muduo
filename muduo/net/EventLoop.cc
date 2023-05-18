@@ -20,7 +20,8 @@ namespace
         return t_loopInThisThread;
     }
 
-    EventLoop::EventLoop() : looping_(false), threadId_(CurrentThread::tid()) {
+    EventLoop::EventLoop() :looping_(false), 
+                            threadId_(CurrentThread::tid()) {
         LOG_TRACE << "EventLoop created " << this << " in thread " << threadId_;
         if(t_loopInThisThread) {
             LOG_FATAL << "Another EventLoop " << t_loopInThisThread << " exists in this thread " << threadId_;

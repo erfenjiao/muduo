@@ -30,7 +30,6 @@
 #include <string.h>
 #include <iosfwd>    // for ostream forward-declaration
 
-#include "accctrl.h"
 
 #include "muduo/base/Types.h"
 
