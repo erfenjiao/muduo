@@ -1,0 +1,3 @@
+add_executable(eventloopthread_unittest EventLoopThread_unittest.cc)
+target_link_libraries(eventloopthread_unittest muduo_net)
+

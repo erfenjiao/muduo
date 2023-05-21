@@ -13,7 +13,7 @@ namespace muduo {
         mutable MutexLock mutex_;
         Condition condition_ GUARDED_BY(mutex_);
         int count_ GUARDED_BY(mutex_);
-    }
+    };
 }
 
 #endif

@@ -1,8 +1,11 @@
 #ifndef MUDUO_BASE_LOGGING_H
 #define MUDUO_BASE_LOGGING_H
 
-#include "muduo/base/LogStream.h"
-#include "muduo/base/TimeStamp.h"
+// #include "muduo/base/LogStream.h"
+// #include "muduo/base/TimeStamp.h"
+#include "LogStream.h"
+#include "TimeStamp.h"
+
 
 #include <string>
 #include <string.h>

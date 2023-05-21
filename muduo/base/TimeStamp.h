@@ -51,7 +51,7 @@ namespace muduo {
             return TimeStamp();
         }
 
-        static TimeStamp fromUnixTime(time_t) {
+        static TimeStamp fromUnixTime(time_t t) {
             return fromUnixTime(t, 0);
         }
 
@@ -74,18 +74,18 @@ namespace muduo {
     }
 
     // Gets time difference of two timestamps, result in seconds.
-    inline double timeDifference(Timestamp high, Timestamp low)
+    inline double timeDifference(TimeStamp high, TimeStamp low)
     {
         int64_t diff = high.microSecondsSinceEpoch() - low.microSecondsSinceEpoch();
-        return static_cast<double>(diff) / Timestamp::kMicroSecondsPerSecond;
+        return static_cast<double>(diff) / TimeStamp::kMicroSecondsPerSecond;
     }
 
     // Add @c seconds to given timestamp.
     // @return timestamp+seconds as Timestamp
-    inline Timestamp addTime(Timestamp timestamp, double seconds)
+    inline TimeStamp addTime(TimeStamp timestamp, double seconds)
     {
-        int64_t delta = static_cast<int64_t>(seconds * Timestamp::kMicroSecondsPerSecond);
-        return Timestamp(timestamp.microSecondsSinceEpoch() + delta);
+        int64_t delta = static_cast<int64_t>(seconds * TimeStamp::kMicroSecondsPerSecond);
+        return TimeStamp(timestamp.microSecondsSinceEpoch() + delta);
     }
 } // namespace muduo
 

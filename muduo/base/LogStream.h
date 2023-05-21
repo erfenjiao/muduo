@@ -18,9 +18,13 @@
 #include <assert.h>
 #include <string.h>
 
-#include "muduo/base/Types.h"
-#include "muduo/base/noncopyable.h"
-#include "muduo/base/StringPiece.h"
+// #include "muduo/base/Types.h"
+// #include "muduo/base/noncopyable.h"
+// #include "muduo/base/StringPiece.h"
+
+#include "Types.h"
+#include "noncopyable.h"
+#include "StringPiece.h"
 
 namespace muduo
 {

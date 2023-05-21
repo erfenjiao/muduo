@@ -3,7 +3,7 @@
 /**
  * 用于获取当前线程ID和线程名称的文件
 */
-#include "muduo/base/Types.h"
+#include "Types.h"
 
 namespace muduo {
     namespace CurrentThread {
@@ -24,7 +24,7 @@ namespace muduo {
             // gcc引入的，作用是允许程序员将最有可能执行的分支告诉编译器
             // 写法为：__builtin_expect(EXP, N)
             // 意思是: EXP==N的概率很大
-            if(__builtin_except(t_cachedTid == 0, 0)) {
+            if(t_cachedTid == 0) {
                 cacheTid();
             }
             return t_cachedTid;

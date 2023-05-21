@@ -1,8 +1,8 @@
 #ifndef MUDUO_NET_EVENTLOOP_H
 #define MUDUO_NET_EVENTLOOP_H
 
-#include "muduo/base/noncopyable.h"
-#include "muduo/base/CurrentThread.h"
+#include "../../project/muduo/muduo/base/noncopyable.h"
+#include "../../project/muduo/muduo/base/CurrentThread.h"
 
 namespace muduo{
     namespace net{
@@ -15,6 +15,7 @@ namespace muduo{
             void quit();
 
             /*
+                每个线程只能有一个EventLoop对象，因此 EventLoop 构造函数需要检查当前线程是否已经创建了其他EventLoop对象
                 assertInLoopThread()函数会断言当前线程是否为指定的IO线程，如果不是，则会触发断言失败
             */
             void assertInLoopThread() {
