@@ -1,6 +1,3 @@
-cmake_minimum_required (VERSION 3.22)
-project(muduo_base)
-
 set(base_SRCS
   Condition.cc
   CountDownLatch.cc

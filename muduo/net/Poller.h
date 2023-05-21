@@ -7,7 +7,9 @@
 #include <vector>
 #include <map>
 
-#include "muduo/base/noncopyable.h"
+#include "../base/noncopyable.h"
+#include "../base/TimeStamp.h"
+#include "EventLoop.h"
 
 namespace muduo
 {

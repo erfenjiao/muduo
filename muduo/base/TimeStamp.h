@@ -11,8 +11,12 @@
 #ifndef MUDUO_BASE_TIMESTAMP
 #define MUDUO_BASE_TIMESTAMP
 
-#include "muduo/base/copyable.h"
-#include "muduo/base/Types.h"
+// #include "muduo/base/copyable.h"
+// #include "muduo/base/Types.h"
+
+
+#include "copyable.h"
+#include "Types.h"
 
 #include <boost/operators.hpp>
 
@@ -77,14 +81,14 @@ namespace muduo {
     inline double timeDifference(TimeStamp high, TimeStamp low)
     {
         int64_t diff = high.microSecondsSinceEpoch() - low.microSecondsSinceEpoch();
-        return static_cast<double>(diff) / TimeStamp::kMicroSecondsPerSecond;
+        return static_cast<double>(diff) / (1000 * 1000);
     }
 
     // Add @c seconds to given timestamp.
     // @return timestamp+seconds as Timestamp
     inline TimeStamp addTime(TimeStamp timestamp, double seconds)
     {
-        int64_t delta = static_cast<int64_t>(seconds * TimeStamp::kMicroSecondsPerSecond);
+        int64_t delta = static_cast<int64_t>(seconds * 1000 * 1000);
         return TimeStamp(timestamp.microSecondsSinceEpoch() + delta);
     }
 } // namespace muduo

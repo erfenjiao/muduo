@@ -29,7 +29,7 @@
 namespace muduo
 {
     namespace detail {
-        const int KSamllBuffer = 4000;
+        const int KSmallBuffer = 4000;
         const int KLargeBuffer = 4000*1000;
 
         template<int SIZE>
@@ -67,7 +67,7 @@ namespace muduo
                 }
             }
 
-            const char* data() { return data_; }
+            const char* data() const { return data_; }
             int length() const { return static_cast<int>(cur_ - data_); }
 
             char* current() { return cur_; }
@@ -92,7 +92,7 @@ namespace muduo
                 通常情况下这个函数不需要实现或调用，仅仅是充当一个可选的回调函数接口，用于MUDUO库的扩展
             */
             void setCookie(void (*cookie)()) {
-                return string(data_, length());
+                cookie_ = cookie; 
             }
 
             string toString() const { return string(data_, length()); }
@@ -114,7 +114,7 @@ namespace muduo
     class LogStream : noncopyable {
         typedef LogStream self;
         public:
-        typedef detail::FixedBuffer<detail::KSamllBuffer> Buffer;
+        typedef detail::FixedBuffer<detail::KSmallBuffer> Buffer;
 
         self& operator<<(bool v) {
             buffer_.append(v ? "1" : "0", 1);

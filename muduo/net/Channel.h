@@ -5,8 +5,8 @@
 
 #include <functional>
 
-#include "muduo/base/noncopyable.h"
-#include "muduo/base/TimeStamp.h"
+#include "../base/noncopyable.h"
+#include "../base/TimeStamp.h"
 
 namespace muduo
 {

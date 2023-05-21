@@ -1,6 +1,8 @@
 
-#include "muduo/base/Thread.h"
-#include "muduo/base/CurrentThread.h"
+// #include "muduo/base/Thread.h"
+// #include "muduo/base/CurrentThread.h"
+#include "Thread.h"
+#include "CurrentThread.h"
 
 #include <errno.h>
 #include <stdio.h>

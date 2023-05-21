@@ -29,7 +29,7 @@ namespace muduo {
         class SourceFile {
             public:
             template<int N>
-            SourceFile(const char (&arr)[N]) : data_(arr), size(N-1) {
+            SourceFile(const char (&arr)[N]) : data_(arr), size_(N-1) {
                 const char* slash = strrchr(data_, '/');
                 if(slash) {
                     data_ = slash + 1;

@@ -3,11 +3,13 @@
 #include <sstream>
 #include <poll.h>
 
-#include "muduo/base/noncopyable.h"
-#include "muduo/base/Logging.h"
+#include "../base/noncopyable.h"
+#include "../base/Logging.h"
 
-#include "muduo/net/Channel.h"
-#include "muduo/net/EventLoop.h"
+// #include "muduo/net/Channel.h"
+// #include "muduo/net/EventLoop.h"
+#include "Channel.h"
+#include "EventLoop.h"
 
 
 using namespace muduo;

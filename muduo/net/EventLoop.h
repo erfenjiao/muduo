@@ -6,6 +6,9 @@
 
 namespace muduo{
     namespace net{
+        class Channel;
+        class Poller;
+        
         class EventLoop : noncopyable {
             public:
             EventLoop();

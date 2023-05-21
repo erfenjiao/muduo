@@ -29,6 +29,7 @@ set(HEADERS
   # Callbacks.h
   Channel.h
   # Endian.h
+  Poller.h
   EventLoop.h
   # EventLoopThread.h
   # EventLoopThreadPool.h
