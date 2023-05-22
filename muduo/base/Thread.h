@@ -19,7 +19,7 @@ namespace muduo
     class Thread : noncopyable{
         public:
         //回调
-        typedef std::function<void()> ThreadFunc();
+        typedef std::function<void()> ThreadFunc;
 
         // C++中的一个类构造函数，用于创建一个新的线程对象。
         // ThreadFunc：线程执行的入口函数，可以是全局函数、静态成员函数或者是lambda表达式。
