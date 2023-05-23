@@ -13,6 +13,8 @@
 #include <linux/unistd.h>
 
 
+
+
 namespace muduo
 {
     namespace detail
@@ -22,9 +24,76 @@ namespace muduo
         }
 
 
+        /*
+            ThreadData类用于保存新线程创建时将传递给它的数据
+        */
+       struct ThreadData {
+        typedef muduo::Thread::ThreadFunc ThreadFunc;
+        ThreadFunc func_;
+        string name_;
+        pid_t* tid_;
+        CountLatch* latch_;
+
+        ThreadData(ThreadFunc func, string name, pid_t* tid, CountLatch* latch)
+                :func_(func),
+                 name_(name),
+                 tid_(tid),
+                 latch_(latch)
+                 {}
+
+       };
+
+        /*
+            新线程的入口点，它运行ThreadData对象的runInThread()方法。
+        */
+        void* startThread(void* obj) {
+            ThreadData* 
+        }
+
+
         
     } // namespace detail
 
+    
+
+    Thread::Thread(ThreadFunc func, const string& n)
+       : started_(false),
+         joined_(false),
+         pthreadId_(0),
+         tid_(0),
+         func_(std::move(func)),
+         latch_(1)
+    {
+        setDefaultName();
+    }
+
+    Thread::~Thread() {
+        if(started_ && joined_) {
+            pthread_detach(pthreadId_);
+        }
+    }
+
+    void Thread::setDefaultName(){
+        int num = numCreated_.incrementAndGet();
+        if (name_.empty())
+        {
+            char buf[32];
+            snprintf(buf, sizeof buf, "Thread%d", num);
+            name_ = buf;
+        }
+    }
+
+    /*
+        首先创建一个新的线程，然后将状态started_设为true，表示线程已经开始运行
+    */
+    void Thread::start() {
+        assert(!started_);
+        started_ = true;
+        detail::ThreadData* data = new detail::ThreadData(func_, );
+        if(pthread_create(&pthreadId_, NULL, &detail::startThread, data)) {
+
+        }
+    }
 
 
     void CurrentThread::cacheTid() {

@@ -28,15 +28,37 @@ namespace muduo
         ~Thread();
 
         void start();
-        void join();
+        void join();   // return pthread_join()
 
 
         pid_t tid() const {
             return tid_;
         }
 
+
+        bool started() const { return started_;}
+
+        pid_t tid() const { return tid_;}
+
+        const string& name() const { return name_; }
+
+        static int numCreated() { return numCreated_.get(); }
+
+
         private:
+        void setDefaultName();
+
+        bool started_;
+        bool joined_;
         pid_t tid_;
+        pthread_t pthreadId_;
+        ThreadFunc func_;
+        string name_;
+        CountLatch latch_;
+
+        static AtomicInt32 numCreated_;
+        
+
 
     };
 } // namespace muduo
