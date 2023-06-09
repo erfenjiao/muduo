@@ -64,6 +64,7 @@ EventLoop* EventLoop::getEventLoopOfCurrentThread(){
 EventLoop::EventLoop():looping_(false), 
                         threadId_(CurrentThread::tid()) {
     LOG_TRACE << "EventLoop created " << this << " in thread " << threadId_;
+
     if(t_loopInThisThread) {
         LOG_FATAL << "Another EventLoop " << t_loopInThisThread << " exists in this thread " << threadId_;
     }
@@ -93,4 +94,10 @@ void EventLoop::abortNotLoopThread() {
     LOG_FATAL << "EventLoop::abortNotInLoopThread - EventLoop" << this
                 << "was created in threadId_ = " << threadId_
                 << ", current thread id = " << CurrentThread::tid(); 
+}
+
+void EventLoop::updateChannel(Channel* channel) {
+    assert(channel->ownerLoop() == this);
+    assertInLoopThread();
+    poller_->updateChannel(channel);
 }

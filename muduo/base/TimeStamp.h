@@ -22,44 +22,57 @@
 
 namespace muduo {
     class TimeStamp : public muduo::copyable,
-                      public boost::equality_comparable<TimeStamp>,
-                      public boost::less_than_comparable<TimeStamp>
+                      public boost::equality_comparable<TimeStamp>,   // 支持相等比较
+                      public boost::less_than_comparable<TimeStamp>   // 支持小于比较
     {
         public:
+        // 构造一个无效的时间戳，即将 microSecondsSinceEpoch_ 设为 0
         TimeStamp() :microSecondsSinceEpoch_(0) {}
 
         explicit TimeStamp(int64_t microSecondsSinceEpochArg) : microSecondsSinceEpoch_(microSecondsSinceEpochArg){}
 
+        // 交换两个时间戳对象的值，用于实现移动语义。
         void swap(TimeStamp& that) {
             std::swap(microSecondsSinceEpoch_, that.microSecondsSinceEpoch_);
         }
 
+        // 将时间戳转换成字符串形式
         string toString() const;
+        //  toFormattedString 还包括了可选的是否显示微秒
         string toFormattedString(bool showMicroseconds = true) const;
         
+        // 判断该时间戳是否有效，即 microSecondsSinceEpoch_ 是否大于 0。
         bool valid() const {
             return microSecondsSinceEpoch_ > 0;
         }
 
+        // 返回以微秒为单位的时间戳。
         int64_t microSecondsSinceEpoch() const {
             return microSecondsSinceEpoch_;
         }
+        // 返回以秒为单位的时间戳。
         time_t secondsSinceEpoch() const {
             return static_cast<time_t>(microSecondsSinceEpoch_ / KMicroSencondsPerSecond);
         }
 
 
-        // Get time of now.
+        // Get time of now. 返回当前时间戳。
         static TimeStamp now();
+        
+        // 返回一个无效的时间戳，即构造函数中将 microSecondsSinceEpoch_ 设为 0 的结果。
         static TimeStamp invalid() {
             return TimeStamp();
         }
 
+        // 从 Unix 时间和微秒数构造时间戳
+        // 这两个函数用于方便地将 Unix 时间转换为时间戳。
         static TimeStamp fromUnixTime(time_t t) {
             return fromUnixTime(t, 0);
         }
 
+        // 从 Unix 时间和微秒数构造时间戳
         static TimeStamp fromUnixTime(time_t t, int microseconds) {
+            // kMicroSecondsPerSecond 为 1000000，即一秒对应的微秒数。
             return TimeStamp(static_cast<int64_t>(t) * KMicroSencondsPerSecond + microseconds);
         }
 

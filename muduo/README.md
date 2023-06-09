@@ -4,3 +4,5 @@
 4. 计数器
 5. eventloop poll channel
 6. 线程 获取线程id 线程同步 etc
+
+在 muduo/muduo 目录下编译

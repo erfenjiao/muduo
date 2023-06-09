@@ -4,10 +4,24 @@
 #include "../../project/muduo/muduo/base/noncopyable.h"
 #include "../../project/muduo/muduo/base/CurrentThread.h"
 
+#include <atomic>
+#include <functional>
+#include <vector>
+
+#include <boost/any.hpp>
+#include <memory>
+
+using namespace std;
+/**
+ * 事件分发器
+*/
+
 namespace muduo{
     namespace net{
         class Channel;
         class Poller;
+        // TODO
+        // class TimerQueue
         
         class EventLoop : noncopyable {
             public:
@@ -16,6 +30,9 @@ namespace muduo{
 
             void loop();
             void quit();
+
+            // internal usage
+            void updateChannel(Channel* channel);
 
             /*
                 每个线程只能有一个EventLoop对象，因此 EventLoop 构造函数需要检查当前线程是否已经创建了其他EventLoop对象
@@ -37,8 +54,13 @@ namespace muduo{
 
             void abortNotLoopThread();
 
+            typedef std::vector<Channel*> ChannelList;
+
             bool looping_;
-            const pid_t threadId_; // 本对象所属的线程
+            std::atomic<bool> quit_;
+
+            const pid_t threadId_;            // 本对象所属的线程
+            std::unique_ptr<Poller> poller_;
 
         };
     }
