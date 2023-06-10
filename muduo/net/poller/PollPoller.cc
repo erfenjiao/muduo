@@ -24,24 +24,48 @@ PollPoller::~PollPoller() = default;
 // virtual TimeStamp poll(int timeoutMs, ChannelList* activeChannels) = 0;
 // Poller 的核心功能，调用 poll(2)获得当前活动的 IO 事件，然后填充调用方传入的 activeChannels，并返回 poll(2)return 的时刻
 TimeStamp PollPoller::poll(int timeoutMs, ChannelList* activeChannels) {  
-      int numEvents = ::poll(&*pollfds_.begin(), pollfds_.size(), timeoutMs);
-      int savedErrno = errno;
 
-      TimeStamp now(TimeStamp::now());
+        /*
+            __fortify_function __fortified_attr_access (__write_only__, 1, 2) int
+            poll (struct pollfd *__fds, nfds_t __nfds, int __timeout)
+            {
+                return __glibc_fortify (poll, __nfds, sizeof (*__fds),
+                            __glibc_objsize (__fds),
+                            __fds, __nfds, __timeout);
+            }
 
-      if( numEvents > 0) {
-          LOG_TRACE << numEvents << " events happened";
-          fillActiveChannels(numEvents, activeChannels);
-      } else if( numEvents == 0) {
-          LOG_TRACE << "nothing happended";
-      } else {
-        if (savedErrno != EINTR)
-        {
-            errno = savedErrno;
-            LOG_SYSERR << "PollPoller::poll()";
+            这段代码定义了一个名为 `poll` 的函数，该函数使用了 `__fortify_function` 和 `__fortified_attr_access` 宏
+            进行增强保护，其目的是防止缓冲区溢出攻击。
+
+            `poll` 函数是用于轮询文件描述符的状态变化的系统调用，它接受
+            一个指向结构体数组的指针 `__fds` 表示需要检测的文件描述符集合，
+            一个 `nfds_t` 类型的整数 `__nfds` 表示需要检测的文件描述符数量，
+            以及一个整数 `__timeout` 表示超时时间。该函数返回发生状态变化的文件描述符的数量。
+
+            在函数实现中，调用了 `__glibc_fortify` 函数，该函数是 glibc 库提供的一个安全增强函数，
+            用于检查内存操作是否越界。该函数接受多个参数，其中第一个参数是要进行安全检查的原始函数 `poll`，
+            接下来的参数是传递给 `poll` 函数的参数。其作用是对传入的参数进行安全检查，确保不会发生缓冲区溢出等安全问题。
+        */
+        int numEvents = ::poll(&*pollfds_.begin(), pollfds_.size(), timeoutMs);
+
+        // #define errno (*__errno_location ())
+        int savedErrno = errno;
+
+        TimeStamp now(TimeStamp::now());
+
+        if( numEvents > 0) {
+            LOG_TRACE << numEvents << " events happened";
+            fillActiveChannels(numEvents, activeChannels);
+        } else if( numEvents == 0) {
+            LOG_TRACE << "nothing happended";
+        } else {
+            if (savedErrno != EINTR)
+            {
+                errno = savedErrno;
+                LOG_SYSERR << "PollPoller::poll()";
+            }
         }
-      }
-      return now;
+        return now;
 }
 
 void PollPoller::fillActiveChannels(int numEvents,
@@ -115,11 +139,44 @@ void PollPoller::updateChannel(Channel* channel) {
         // struct pollfd pfd;
         pollfds_.push_back(pfd);
 
-        
+        int idx = static_cast<int>(pollfds_.size()) - 1;
+
+        channel->set_index(idx);
+
+        // muduo::net::Poller::ChannelMap muduo::net::Poller::channels_
+        // 一个事件对应一个Map
+        channels_[pfd.fd] = channel;
+
 
     } else {
         // update existing one
-    }
+        /*
+            更新已有的 Channel 的复杂度是 O(1)
+                struct pollfd
+            {
+                int fd;			     File descriptor to poll.  
+                short int events;    Types of events poller cares about.  
+                short int revents;	 Types of events that actually occurred.  
+            };
+        */
+        assert(channels_.find(channel->fd()) != channels_.end());
+        assert(channels_[channel->fd()] == channel);
+
+        int idx = channel->index();
+        assert(idx <= 0 && idx < static_cast<int>(pollfds_.size()));
+
+        struct pollfd& pfd = pollfds_[idx];
+        assert(pfd.fd == channel->fd() || pfd.fd == -1);
+
+        pfd.events = static_cast<short>(channel->events());
+
+        pfd.revents = 0;
+
+        if(channel->isNoneEvent()) {
+            // ignore this pfd
+            pfd.fd = -1;
+        }
+    }  // else
 }
 
 /*
