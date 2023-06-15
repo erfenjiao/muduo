@@ -189,6 +189,57 @@ net/CMakeFiles/muduo_net.dir/Poller.cc.o: \
  /home/erfenjiao/project/muduo/muduo/base/noncopyable.h \
  /home/erfenjiao/project/muduo/muduo/base/CurrentThread.h \
  /home/erfenjiao/project/muduo/muduo/base/Types.h \
- /home/erfenjiao/project/muduo/muduo/net/Channel.h \
+ /usr/include/c++/11/atomic /usr/include/c++/11/bits/atomic_base.h \
+ /usr/include/c++/11/bits/atomic_lockfree_defines.h \
  /usr/include/c++/11/functional /usr/include/c++/11/bits/refwrap.h \
- /usr/include/c++/11/bits/std_function.h
+ /usr/include/c++/11/bits/std_function.h /usr/include/boost/any.hpp \
+ /usr/include/boost/type_index.hpp \
+ /usr/include/boost/type_index/stl_type_index.hpp \
+ /usr/include/boost/type_index/type_index_facade.hpp \
+ /usr/include/boost/container_hash/hash_fwd.hpp \
+ /usr/include/c++/11/cstring /usr/include/boost/static_assert.hpp \
+ /usr/include/boost/throw_exception.hpp \
+ /usr/include/boost/assert/source_location.hpp \
+ /usr/include/boost/current_function.hpp /usr/include/boost/cstdint.hpp \
+ /usr/include/boost/exception/exception.hpp \
+ /usr/include/boost/core/demangle.hpp /usr/include/c++/11/cxxabi.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/cxxabi_tweaks.h \
+ /usr/include/boost/type_traits/conditional.hpp \
+ /usr/include/boost/type_traits/is_const.hpp \
+ /usr/include/boost/type_traits/integral_constant.hpp \
+ /usr/include/boost/type_traits/is_reference.hpp \
+ /usr/include/boost/type_traits/is_lvalue_reference.hpp \
+ /usr/include/boost/type_traits/is_rvalue_reference.hpp \
+ /usr/include/boost/type_traits/is_volatile.hpp \
+ /usr/include/boost/type_traits/remove_cv.hpp \
+ /usr/include/boost/type_traits/remove_reference.hpp \
+ /usr/include/boost/type_traits/decay.hpp \
+ /usr/include/boost/type_traits/is_array.hpp \
+ /usr/include/boost/type_traits/is_function.hpp \
+ /usr/include/boost/type_traits/detail/config.hpp \
+ /usr/include/boost/version.hpp \
+ /usr/include/boost/type_traits/detail/is_function_cxx_11.hpp \
+ /usr/include/boost/type_traits/remove_bounds.hpp \
+ /usr/include/boost/type_traits/remove_extent.hpp \
+ /usr/include/boost/type_traits/add_pointer.hpp \
+ /usr/include/boost/type_traits/add_reference.hpp \
+ /usr/include/boost/utility/enable_if.hpp \
+ /usr/include/boost/core/enable_if.hpp \
+ /usr/include/boost/type_traits/is_same.hpp /usr/include/c++/11/memory \
+ /usr/include/c++/11/bits/stl_tempbuf.h \
+ /usr/include/c++/11/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/11/bits/align.h /usr/include/c++/11/bit \
+ /usr/include/c++/11/bits/unique_ptr.h \
+ /usr/include/c++/11/bits/shared_ptr.h \
+ /usr/include/c++/11/bits/shared_ptr_base.h \
+ /usr/include/c++/11/bits/allocated_ptr.h \
+ /usr/include/c++/11/ext/concurrence.h \
+ /usr/include/c++/11/bits/shared_ptr_atomic.h \
+ /usr/include/c++/11/backward/auto_ptr.h \
+ /home/erfenjiao/project/muduo/muduo/net/Channel.h \
+ /home/erfenjiao/project/muduo/muduo/net/../base/Logging.h \
+ /home/erfenjiao/project/muduo/muduo/net/../base/LogStream.h \
+ /usr/include/assert.h \
+ /home/erfenjiao/project/muduo/muduo/net/../base/noncopyable.h \
+ /home/erfenjiao/project/muduo/muduo/net/../base/StringPiece.h \
+ /home/erfenjiao/project/muduo/muduo/net/../base/TimeStamp.h

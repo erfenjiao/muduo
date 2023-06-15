@@ -210,6 +210,32 @@ eventloopthread_unittest/fast:
 	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloopthread_unittest.dir/build.make net/tests/CMakeFiles/eventloopthread_unittest.dir/build
 .PHONY : eventloopthread_unittest/fast
 
+#=============================================================================
+# Target rules for targets named eventloop_unittest
+
+# Build rule for target.
+eventloop_unittest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 eventloop_unittest
+.PHONY : eventloop_unittest
+
+# fast build rule for target.
+eventloop_unittest/fast:
+	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/build
+.PHONY : eventloop_unittest/fast
+
+#=============================================================================
+# Target rules for targets named test3
+
+# Build rule for target.
+test3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test3
+.PHONY : test3
+
+# fast build rule for target.
+test3/fast:
+	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/build
+.PHONY : test3/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -223,9 +249,11 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... eventloop_unittest"
 	@echo "... eventloopthread_unittest"
 	@echo "... muduo_base"
 	@echo "... muduo_net"
+	@echo "... test3"
 .PHONY : help
 
 

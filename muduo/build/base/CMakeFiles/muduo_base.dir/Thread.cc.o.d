@@ -162,7 +162,27 @@ base/CMakeFiles/muduo_base.dir/Thread.cc.o: \
  /usr/include/c++/11/bits/shared_ptr_atomic.h \
  /usr/include/c++/11/bits/atomic_base.h \
  /usr/include/c++/11/bits/atomic_lockfree_defines.h \
- /usr/include/c++/11/backward/auto_ptr.h /usr/include/unistd.h \
+ /usr/include/c++/11/backward/auto_ptr.h \
+ /home/erfenjiao/project/muduo/muduo/base/Logging.h \
+ /home/erfenjiao/project/muduo/muduo/base/LogStream.h \
+ /home/erfenjiao/project/muduo/muduo/base/StringPiece.h \
+ /home/erfenjiao/project/muduo/muduo/base/TimeStamp.h \
+ /home/erfenjiao/project/muduo/muduo/base/copyable.h \
+ /usr/include/boost/operators.hpp /usr/include/c++/11/cstddef \
+ /usr/include/c++/11/iterator /usr/include/c++/11/bits/stream_iterator.h \
+ /usr/include/c++/11/bits/streambuf_iterator.h \
+ /usr/include/c++/11/streambuf /usr/include/c++/11/bits/ios_base.h \
+ /usr/include/c++/11/bits/locale_classes.h \
+ /usr/include/c++/11/bits/locale_classes.tcc \
+ /usr/include/c++/11/system_error \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h \
+ /usr/include/c++/11/stdexcept /usr/include/c++/11/bits/streambuf.tcc \
+ /usr/include/boost/config.hpp /usr/include/boost/config/user.hpp \
+ /usr/include/boost/config/detail/select_compiler_config.hpp \
+ /usr/include/boost/config/compiler/gcc.hpp \
+ /usr/include/boost/config/detail/select_stdlib_config.hpp \
+ /usr/include/c++/11/version \
+ /usr/include/boost/config/stdlib/libstdcpp3.hpp /usr/include/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h \
@@ -171,6 +191,14 @@ base/CMakeFiles/muduo_base.dir/Thread.cc.o: \
  /usr/include/x86_64-linux-gnu/bits/unistd.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
+ /usr/include/boost/config/detail/select_platform_config.hpp \
+ /usr/include/boost/config/platform/linux.hpp \
+ /usr/include/boost/config/detail/posix_features.hpp \
+ /usr/include/boost/config/detail/suffix.hpp \
+ /usr/include/boost/config/helper_macros.hpp \
+ /usr/include/boost/detail/workaround.hpp \
+ /usr/include/boost/config/workaround.hpp \
+ /usr/include/boost/core/addressof.hpp \
  /usr/include/x86_64-linux-gnu/sys/prctl.h /usr/include/linux/prctl.h \
  /usr/include/linux/types.h /usr/include/x86_64-linux-gnu/asm/types.h \
  /usr/include/asm-generic/types.h /usr/include/asm-generic/int-ll64.h \

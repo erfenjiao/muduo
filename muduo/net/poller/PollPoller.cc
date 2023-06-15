@@ -55,10 +55,13 @@ TimeStamp PollPoller::poll(int timeoutMs, ChannelList* activeChannels) {
 
         if( numEvents > 0) {
             LOG_TRACE << numEvents << " events happened";
+
             fillActiveChannels(numEvents, activeChannels);
-        } else if( numEvents == 0) {
+        } 
+        else if( numEvents == 0) {
             LOG_TRACE << "nothing happended";
-        } else {
+        } 
+        else {
             if (savedErrno != EINTR)
             {
                 errno = savedErrno;
@@ -67,6 +70,7 @@ TimeStamp PollPoller::poll(int timeoutMs, ChannelList* activeChannels) {
         }
         return now;
 }
+
 
 void PollPoller::fillActiveChannels(int numEvents,
                                     ChannelList* activeChannels) const{
@@ -111,6 +115,7 @@ void PollPoller::fillActiveChannels(int numEvents,
 */
 
 void PollPoller::updateChannel(Channel* channel) {
+    
     Poller::assertInLoopThread();
 
     /*
@@ -177,6 +182,63 @@ void PollPoller::updateChannel(Channel* channel) {
             pfd.fd = -1;
         }
     }  // else
+}
+
+/*
+Channel 类
+private:
+    void update();
+
+    static const int kNoneEvent;
+    static const int kReadEvent;
+    static const int kWriteEvent;
+
+    EventLoop* loop_;
+    const int fd_;
+    int events_;       // IO 事件
+    int revent_;       // 目前活动的事件
+    int index_;
+
+    ReadEventCallback readCallback_;
+    EventCallback writeCallback_;
+    EventCallback errorCallback_;
+    EventCallback closeCallback_;
+
+*/
+void PollPoller::removeChannel(Channel * channel) {
+    Poller::assertInLoopThread();
+    LOG_TRACE << "fd = " << channel->fd();
+
+    // typedef std::map<int, Channel*> ChannelMap;
+    // muduo::net::Poller::ChannelMap muduo::net::Poller::channels_
+    assert(channels_.find(channel->fd()) != channels_.end());
+    assert(channels_[channel->fd()] == channel);
+    assert(channel->isNoneEvent());
+
+    int idx = channel->index();
+    assert(0 <= idx && idx < static_cast<int>(pollfds_.size()));
+
+    const struct pollfd& pfd = pollfds_[idx];
+    (void)pfd;
+    assert(pfd.fd == -channel->fd() - 1 && pfd.events == channel->events());
+
+    size_t n = channels_.erase(channel->fd());
+    assert(n == 1); (void)n;
+    if (implicit_cast<size_t>(idx) == pollfds_.size()-1)
+    {
+        pollfds_.pop_back();
+    }
+    else
+    {
+        int channelAtEnd = pollfds_.back().fd;
+        iter_swap(pollfds_.begin()+idx, pollfds_.end()-1);
+        if (channelAtEnd < 0)
+        {
+        channelAtEnd = -channelAtEnd-1;
+        }
+        channels_[channelAtEnd]->set_index(idx);
+        pollfds_.pop_back();
+    }
 }
 
 /*

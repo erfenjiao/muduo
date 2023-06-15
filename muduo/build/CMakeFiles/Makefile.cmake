@@ -72,4 +72,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "base/CMakeFiles/muduo_base.dir/DependInfo.cmake"
   "net/CMakeFiles/muduo_net.dir/DependInfo.cmake"
   "net/tests/CMakeFiles/eventloopthread_unittest.dir/DependInfo.cmake"
+  "net/tests/CMakeFiles/eventloop_unittest.dir/DependInfo.cmake"
+  "net/tests/CMakeFiles/test3.dir/DependInfo.cmake"
   )

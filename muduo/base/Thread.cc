@@ -3,6 +3,9 @@
 // #include "muduo/base/CurrentThread.h"
 #include "Thread.h"
 #include "CurrentThread.h"
+#include "Logging.h"
+
+#include <type_traits>
 
 #include <errno.h>
 #include <stdio.h>
@@ -40,14 +43,25 @@ namespace muduo
                  tid_(tid),
                  latch_(latch)
                  {}
+        
+        void runInThread() {
+            LOG_INFO << "runInTread()" ;
+
+
+       }
 
        };
+
+       
 
         /*
             新线程的入口点，它运行ThreadData对象的runInThread()方法。
         */
         void* startThread(void* obj) {
-            ThreadData* 
+            ThreadData* data = static_cast<ThreadData*>(obj);
+            data->runInThread();
+            delete data;
+            return NULL;
         }
 
 
@@ -59,8 +73,8 @@ namespace muduo
     Thread::Thread(ThreadFunc func, const string& n)
        : started_(false),
          joined_(false),
-         pthreadId_(0),
          tid_(0),
+         pthreadId_(0),
          func_(std::move(func)),
          latch_(1)
     {
@@ -89,9 +103,14 @@ namespace muduo
     void Thread::start() {
         assert(!started_);
         started_ = true;
-        detail::ThreadData* data = new detail::ThreadData(func_, );
+        detail::ThreadData* data = new detail::ThreadData(func_, name_, &tid_, &latch_);
         if(pthread_create(&pthreadId_, NULL, &detail::startThread, data)) {
-
+            started_ = false;
+            delete data;
+            LOG_SYSFATAL << "Failed in pthread_create";
+        } else {
+            latch_.wait();
+            assert(tid_ > 0);
         }
     }
 

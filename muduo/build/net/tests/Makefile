@@ -185,6 +185,34 @@ eventloopthread_unittest/fast:
 	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloopthread_unittest.dir/build.make net/tests/CMakeFiles/eventloopthread_unittest.dir/build
 .PHONY : eventloopthread_unittest/fast
 
+# Convenience name for target.
+net/tests/CMakeFiles/eventloop_unittest.dir/rule:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/tests/CMakeFiles/eventloop_unittest.dir/rule
+.PHONY : net/tests/CMakeFiles/eventloop_unittest.dir/rule
+
+# Convenience name for target.
+eventloop_unittest: net/tests/CMakeFiles/eventloop_unittest.dir/rule
+.PHONY : eventloop_unittest
+
+# fast build rule for target.
+eventloop_unittest/fast:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/build
+.PHONY : eventloop_unittest/fast
+
+# Convenience name for target.
+net/tests/CMakeFiles/test3.dir/rule:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/tests/CMakeFiles/test3.dir/rule
+.PHONY : net/tests/CMakeFiles/test3.dir/rule
+
+# Convenience name for target.
+test3: net/tests/CMakeFiles/test3.dir/rule
+.PHONY : test3
+
+# fast build rule for target.
+test3/fast:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/build
+.PHONY : test3/fast
+
 EventLoopThread_unittest.o: EventLoopThread_unittest.cc.o
 .PHONY : EventLoopThread_unittest.o
 
@@ -209,6 +237,54 @@ EventLoopThread_unittest.cc.s:
 	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloopthread_unittest.dir/build.make net/tests/CMakeFiles/eventloopthread_unittest.dir/EventLoopThread_unittest.cc.s
 .PHONY : EventLoopThread_unittest.cc.s
 
+EventLoop_unittest.o: EventLoop_unittest.cc.o
+.PHONY : EventLoop_unittest.o
+
+# target to build an object file
+EventLoop_unittest.cc.o:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/EventLoop_unittest.cc.o
+.PHONY : EventLoop_unittest.cc.o
+
+EventLoop_unittest.i: EventLoop_unittest.cc.i
+.PHONY : EventLoop_unittest.i
+
+# target to preprocess a source file
+EventLoop_unittest.cc.i:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/EventLoop_unittest.cc.i
+.PHONY : EventLoop_unittest.cc.i
+
+EventLoop_unittest.s: EventLoop_unittest.cc.s
+.PHONY : EventLoop_unittest.s
+
+# target to generate assembly for a file
+EventLoop_unittest.cc.s:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/EventLoop_unittest.cc.s
+.PHONY : EventLoop_unittest.cc.s
+
+test3.o: test3.cc.o
+.PHONY : test3.o
+
+# target to build an object file
+test3.cc.o:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/test3.cc.o
+.PHONY : test3.cc.o
+
+test3.i: test3.cc.i
+.PHONY : test3.i
+
+# target to preprocess a source file
+test3.cc.i:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/test3.cc.i
+.PHONY : test3.cc.i
+
+test3.s: test3.cc.s
+.PHONY : test3.s
+
+# target to generate assembly for a file
+test3.cc.s:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/test3.cc.s
+.PHONY : test3.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -222,10 +298,18 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... eventloop_unittest"
 	@echo "... eventloopthread_unittest"
+	@echo "... test3"
 	@echo "... EventLoopThread_unittest.o"
 	@echo "... EventLoopThread_unittest.i"
 	@echo "... EventLoopThread_unittest.s"
+	@echo "... EventLoop_unittest.o"
+	@echo "... EventLoop_unittest.i"
+	@echo "... EventLoop_unittest.s"
+	@echo "... test3.o"
+	@echo "... test3.i"
+	@echo "... test3.s"
 .PHONY : help
 
 

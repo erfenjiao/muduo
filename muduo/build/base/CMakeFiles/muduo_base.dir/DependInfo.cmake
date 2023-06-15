@@ -14,6 +14,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/erfenjiao/project/muduo/muduo/base/LogStream.cc" "base/CMakeFiles/muduo_base.dir/LogStream.cc.o" "gcc" "base/CMakeFiles/muduo_base.dir/LogStream.cc.o.d"
   "/home/erfenjiao/project/muduo/muduo/base/Logging.cc" "base/CMakeFiles/muduo_base.dir/Logging.cc.o" "gcc" "base/CMakeFiles/muduo_base.dir/Logging.cc.o.d"
   "/home/erfenjiao/project/muduo/muduo/base/Thread.cc" "base/CMakeFiles/muduo_base.dir/Thread.cc.o" "gcc" "base/CMakeFiles/muduo_base.dir/Thread.cc.o.d"
+  "/home/erfenjiao/project/muduo/muduo/base/TimeStamp.cc" "base/CMakeFiles/muduo_base.dir/TimeStamp.cc.o" "gcc" "base/CMakeFiles/muduo_base.dir/TimeStamp.cc.o.d"
   )
 
 # Targets to which this target links.

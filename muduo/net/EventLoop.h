@@ -32,7 +32,10 @@ namespace muduo{
             void quit();
 
             // internal usage
+            void wakeup();
             void updateChannel(Channel* channel);
+            void removeChannel(Channel* channel);
+            bool hasChannel(Channel* channel);
 
             /*
                 每个线程只能有一个EventLoop对象，因此 EventLoop 构造函数需要检查当前线程是否已经创建了其他EventLoop对象
@@ -58,9 +61,11 @@ namespace muduo{
 
             bool looping_;
             std::atomic<bool> quit_;
-
             const pid_t threadId_;            // 本对象所属的线程
             std::unique_ptr<Poller> poller_;
+
+            // scratch variables
+            ChannelList activeChannels_;
 
         };
     }

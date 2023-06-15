@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/muduo_base.dir/Logging.cc.o.d"
   "CMakeFiles/muduo_base.dir/Thread.cc.o"
   "CMakeFiles/muduo_base.dir/Thread.cc.o.d"
+  "CMakeFiles/muduo_base.dir/TimeStamp.cc.o"
+  "CMakeFiles/muduo_base.dir/TimeStamp.cc.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

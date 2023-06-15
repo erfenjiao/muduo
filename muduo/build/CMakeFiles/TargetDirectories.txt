@@ -29,6 +29,8 @@
 /home/erfenjiao/project/muduo/muduo/build/net/CMakeFiles/install/local.dir
 /home/erfenjiao/project/muduo/muduo/build/net/CMakeFiles/install/strip.dir
 /home/erfenjiao/project/muduo/muduo/build/net/tests/CMakeFiles/eventloopthread_unittest.dir
+/home/erfenjiao/project/muduo/muduo/build/net/tests/CMakeFiles/eventloop_unittest.dir
+/home/erfenjiao/project/muduo/muduo/build/net/tests/CMakeFiles/test3.dir
 /home/erfenjiao/project/muduo/muduo/build/net/tests/CMakeFiles/test.dir
 /home/erfenjiao/project/muduo/muduo/build/net/tests/CMakeFiles/edit_cache.dir
 /home/erfenjiao/project/muduo/muduo/build/net/tests/CMakeFiles/rebuild_cache.dir

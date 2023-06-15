@@ -30,14 +30,17 @@ namespace muduo
         void start();
         void join();   // return pthread_join()
 
-
-        pid_t tid() const {
-            return tid_;
-        }
-
-
         bool started() const { return started_;}
 
+        /*
+            error:
+            ‘pid_t muduo::Thread::tid() const’ cannot be overloaded with 
+            ‘pid_t muduo::Thread::tid() const’
+            多写了一个tid
+            pid_t tid() const {
+            return tid_;
+        }
+        */
         pid_t tid() const { return tid_;}
 
         const string& name() const { return name_; }
@@ -48,6 +51,10 @@ namespace muduo
         private:
         void setDefaultName();
 
+        /*
+            与构造函数初始化顺序一致最好，
+            这是因为在 C++ 中，类中的成员变量的初始化顺序是根据它们在类定义中出现的顺序来确定的。
+        */
         bool started_;
         bool joined_;
         pid_t tid_;

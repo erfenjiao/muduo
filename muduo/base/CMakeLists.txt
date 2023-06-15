@@ -5,6 +5,7 @@ set(base_SRCS
   Logging.cc
   LogStream.cc
   Thread.cc
+  TimeStamp.cc
   )
 
 add_library(muduo_base ${base_SRCS})

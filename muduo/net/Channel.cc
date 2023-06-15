@@ -35,9 +35,11 @@ void Channel::update() {
     loop_->updateChannel(this);
 }
 
-// poller.h 中 fillActiveChannels() 遍历pollfds_,找出有活动事件的fd，把它对应的Channel填入activeChannels。
-// 当前活动事件 revents 会保存在Channel中，供 Channel::handleEvent() 使用
-// 注意：不能一边遍历 pollfds_ ， 一边调用 Channel::handleEvent()。
+/*
+    poller.h 中 fillActiveChannels() 遍历pollfds_,找出有活动事件的fd，把它对应的Channel填入activeChannels。
+    当前活动事件 revents 会保存在Channel中，供 Channel::handleEvent() 使用
+    注意：不能一边遍历 pollfds_ ， 一边调用 Channel::handleEvent()。
+*/
 void Channel::handleEvent() {
     LOG_TRACE << "Channel::handleEvent():\n" ;
     

@@ -62,7 +62,9 @@ EventLoop* EventLoop::getEventLoopOfCurrentThread(){
     构造函数
 */
 EventLoop::EventLoop():looping_(false), 
-                        threadId_(CurrentThread::tid()) {
+                        quit_(false),
+                        threadId_(CurrentThread::tid())
+                         {
     LOG_TRACE << "EventLoop created " << this << " in thread " << threadId_;
 
     if(t_loopInThisThread) {
@@ -78,13 +80,31 @@ EventLoop::~EventLoop() {
     t_loopInThisThread = NULL;
 }
 
-// 事件循环
+/*
+    事件循环
+    调用Poller::poll() 获得当前活动事件的 Channel 列表，
+    然后依次调用每个 Channel 的 handleEvent() 函数
+*/
 void EventLoop::loop() {
     assert(!looping_);
     assertInLoopThread();
-    looping_ = true;
 
-    //poll(NULL, 0, 5*1000);
+    looping_ = true;
+    quit_ = false;
+
+    /*
+        新增了quit() 成员函数，还加了几个数据成员，并在构造函数里初始化它们
+        EventLoop 通过 scoped_ptr 来间接持有 Poller，因此 EventLoop.h 中不必包含 Poller.h
+    */
+    while(!quit_) {
+        activeChannels_.clear();
+        poller_->poll(kPollTimeMs, &activeChannels_);
+
+        for(ChannelList::iterator it = activeChannels_.begin() ; it != activeChannels_.end() ; ++it) {
+
+            (*it)->handleEvent();
+        }
+    }
 
     LOG_TRACE << "EventLoop" << this << " stop looping";
     looping_ = false;
@@ -97,7 +117,20 @@ void EventLoop::abortNotLoopThread() {
 }
 
 void EventLoop::updateChannel(Channel* channel) {
+    LOG_INFO << "EventLoop::updateChannel - channel:" << channel;
     assert(channel->ownerLoop() == this);
     assertInLoopThread();
+
     poller_->updateChannel(channel);
+}
+
+void EventLoop::quit() {
+    quit_ = true;
+    if(!isInLoopThread()) {
+        wakeup();
+    }
+}
+
+void EventLoop::wakeup() {
+    
 }

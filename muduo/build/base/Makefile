@@ -329,6 +329,30 @@ Thread.cc.s:
 	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/Thread.cc.s
 .PHONY : Thread.cc.s
 
+TimeStamp.o: TimeStamp.cc.o
+.PHONY : TimeStamp.o
+
+# target to build an object file
+TimeStamp.cc.o:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/TimeStamp.cc.o
+.PHONY : TimeStamp.cc.o
+
+TimeStamp.i: TimeStamp.cc.i
+.PHONY : TimeStamp.i
+
+# target to preprocess a source file
+TimeStamp.cc.i:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/TimeStamp.cc.i
+.PHONY : TimeStamp.cc.i
+
+TimeStamp.s: TimeStamp.cc.s
+.PHONY : TimeStamp.s
+
+# target to generate assembly for a file
+TimeStamp.cc.s:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/TimeStamp.cc.s
+.PHONY : TimeStamp.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -361,6 +385,9 @@ help:
 	@echo "... Thread.o"
 	@echo "... Thread.i"
 	@echo "... Thread.s"
+	@echo "... TimeStamp.o"
+	@echo "... TimeStamp.i"
+	@echo "... TimeStamp.s"
 .PHONY : help
 
 

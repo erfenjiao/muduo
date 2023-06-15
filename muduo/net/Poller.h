@@ -49,23 +49,17 @@ namespace muduo
 
             virtual void removeChannel(Channel* channel) = 0;
 
-            void assertInLoopThread() {
+            virtual bool hasChannel(Channel* channel) const;
+
+            void assertInLoopThread() const{
                 ownerLoop_->assertInLoopThread();
             }
             
 
 
             protected:
-            void fillActiveChannels(int numEvents, ChannelList* activeChannels) const;
 
-            typedef std::vector<struct pollfd> PollFdList;
-            // 从 fd 到 Channel* 的映射
             typedef std::map<int, Channel*> ChannelMap;
-
-            
-            //Poller::poll() 不会在每次调用poll(2)之前临时构造pollfd数组，而是将他们缓存起来(pollfds_)
-            // typedef std::vector<pollfd> muduo::net::Poller::PollFdList
-            PollFdList pollfds_;
             ChannelMap channels_;
 
             private:
@@ -77,3 +71,10 @@ namespace muduo
 
 
 #endif
+
+//void fillActiveChannels(int numEvents, ChannelList* activeChannels) const;
+//typedef std::vector<struct pollfd> PollFdList;
+// 从 fd 到 Channel* 的映射
+//Poller::poll() 不会在每次调用poll(2)之前临时构造pollfd数组，而是将他们缓存起来(pollfds_)
+// typedef std::vector<pollfd> muduo::net::Poller::PollFdList
+//PollFdList pollfds_;
