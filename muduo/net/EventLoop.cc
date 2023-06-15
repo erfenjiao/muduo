@@ -12,6 +12,9 @@
 #include "../base/Logging.h"
 #include "../base/CurrentThread.h"
 
+#include <algorithm>
+
+#include <signal.h>
 #include <unistd.h>
 #include <assert.h>
 
@@ -116,6 +119,9 @@ void EventLoop::abortNotLoopThread() {
                 << ", current thread id = " << CurrentThread::tid(); 
 }
 
+/*
+    检查断言之后调用Poller::updateChannel()
+*/
 void EventLoop::updateChannel(Channel* channel) {
     LOG_INFO << "EventLoop::updateChannel - channel:" << channel;
     assert(channel->ownerLoop() == this);
@@ -124,13 +130,39 @@ void EventLoop::updateChannel(Channel* channel) {
     poller_->updateChannel(channel);
 }
 
+
+
+void EventLoop::removeChannel(Channel* channel)
+{
+    assert(channel->ownerLoop() == this);
+     assertInLoopThread();
+    if (eventHandling_)
+    {
+        assert(currentActiveChannel_ == channel ||
+            std::find(activeChannels_.begin(), activeChannels_.end(), channel) == activeChannels_.end());
+    }
+    poller_->removeChannel(channel);
+}
+
+bool EventLoop::hasChannel(Channel* channel)
+{
+    assert(channel->ownerLoop() == this);
+    assertInLoopThread();
+    return poller_->hasChannel(channel);
+}
+
+
 void EventLoop::quit() {
     quit_ = true;
     if(!isInLoopThread()) {
-        wakeup();
+        //wakeup();
     }
 }
 
-void EventLoop::wakeup() {
-    
-}
+// void EventLoop::wakeup() {
+//     uint64_t one = 1;
+//     ssize_t n = sockets::write(wakeupFd_, &one, sizeof one);
+//     if(n != sizeof one) {
+//         LOG_ERROR << "EventLoop::wakeup() writes " << n << " bytes instead of 8";
+//     }
+// }

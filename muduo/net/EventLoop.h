@@ -61,11 +61,13 @@ namespace muduo{
 
             bool looping_;
             std::atomic<bool> quit_;
+            bool eventHandling_; /* atomic */
             const pid_t threadId_;            // 本对象所属的线程
             std::unique_ptr<Poller> poller_;
-
+            int wakeupFd_;
             // scratch variables
             ChannelList activeChannels_;
+            Channel* currentActiveChannel_;
 
         };
     }
