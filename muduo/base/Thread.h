@@ -61,7 +61,7 @@ namespace muduo
         pthread_t pthreadId_;
         ThreadFunc func_;
         string name_;
-        CountLatch latch_;
+        CountDownLatch latch_;
 
         static AtomicInt32 numCreated_;
         

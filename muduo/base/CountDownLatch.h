@@ -19,9 +19,9 @@
 */
 
 namespace muduo {
-    class CountLatch : noncopyable {
+    class CountDownLatch : noncopyable {
         public:
-        explicit CountLatch(int count);
+        explicit CountDownLatch(int count);
 
         /* 
             等待计数器的值变为 0 ，如果当前计数器不为0，则会阻塞当前线程。

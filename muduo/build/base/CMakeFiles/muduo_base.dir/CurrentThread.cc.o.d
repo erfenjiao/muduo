@@ -134,4 +134,8 @@ base/CMakeFiles/muduo_base.dir/CurrentThread.cc.o: \
  /usr/include/c++/11/bits/charconv.h \
  /usr/include/c++/11/bits/functional_hash.h \
  /usr/include/c++/11/bits/hash_bytes.h \
- /usr/include/c++/11/bits/basic_string.tcc
+ /usr/include/c++/11/bits/basic_string.tcc /usr/include/c++/11/cxxabi.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/cxxabi_tweaks.h \
+ /usr/include/c++/11/bits/cxxabi_init_exception.h \
+ /usr/include/c++/11/typeinfo /usr/include/execinfo.h \
+ /usr/include/c++/11/stdlib.h

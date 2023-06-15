@@ -76,6 +76,7 @@ namespace muduo
             private:
             void update();
 
+            /* 必须初始化。在 cc 中 */
             static const int kNoneEvent;
             static const int kReadEvent;
             static const int kWriteEvent;

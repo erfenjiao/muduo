@@ -52,6 +52,8 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/erfenjiao/project/muduo/muduo/base/Condition.h"
     "/home/erfenjiao/project/muduo/muduo/base/CountDownLatch.h"
     "/home/erfenjiao/project/muduo/muduo/base/CurrentThread.h"
+    "/home/erfenjiao/project/muduo/muduo/base/Date.h"
+    "/home/erfenjiao/project/muduo/muduo/base/Exception.h"
     "/home/erfenjiao/project/muduo/muduo/base/LogStream.h"
     "/home/erfenjiao/project/muduo/muduo/base/Logging.h"
     "/home/erfenjiao/project/muduo/muduo/base/Mutex.h"

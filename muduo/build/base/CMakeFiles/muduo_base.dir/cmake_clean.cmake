@@ -7,6 +7,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/muduo_base.dir/CountDownLatch.cc.o.d"
   "CMakeFiles/muduo_base.dir/CurrentThread.cc.o"
   "CMakeFiles/muduo_base.dir/CurrentThread.cc.o.d"
+  "CMakeFiles/muduo_base.dir/Date.cc.o"
+  "CMakeFiles/muduo_base.dir/Date.cc.o.d"
+  "CMakeFiles/muduo_base.dir/Exception.cc.o"
+  "CMakeFiles/muduo_base.dir/Exception.cc.o.d"
   "CMakeFiles/muduo_base.dir/LogStream.cc.o"
   "CMakeFiles/muduo_base.dir/LogStream.cc.o.d"
   "CMakeFiles/muduo_base.dir/Logging.cc.o"
@@ -15,6 +19,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/muduo_base.dir/Thread.cc.o.d"
   "CMakeFiles/muduo_base.dir/TimeStamp.cc.o"
   "CMakeFiles/muduo_base.dir/TimeStamp.cc.o.d"
+  "CMakeFiles/muduo_base.dir/TimeZone.cc.o"
+  "CMakeFiles/muduo_base.dir/TimeZone.cc.o.d"
 )
 
 # Per-language clean rules from dependency scanning.
