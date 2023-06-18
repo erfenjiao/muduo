@@ -7,6 +7,15 @@
 #include <cstdint>
 #include <cstddef>
 
+/*
+    表示定时器的ID
+    每个定时器都对应着一个唯一的ID，该ID由定时器队列分配。
+    其中，timer_成员变量指向该定时器对象，sequence_成员变量则是序列号，用于标识该定时器在定时器队列中的位置。
+
+    通过TimerId类，可以方便地管理和操作定时器。
+    例如，在定时器队列中添加、删除定时器时，需要先获取该定时器的TimerId，然后再执行相应的操作。
+*/
+
 namespace muduo
 {
     namespace net
