@@ -17,10 +17,10 @@ namespace muduo
         class Timer;
         class TimerId;
 
-        class TimeQueue : noncopyable{
+        class TimerQueue : noncopyable{
             public:
-            explicit TimeQueue(EventLoop* loop);
-            ~TimeQueue();
+            explicit TimerQueue(EventLoop* loop);
+            ~TimerQueue();
 
              ///
             /// Schedules the callback to be run at given time,
