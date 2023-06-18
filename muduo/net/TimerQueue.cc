@@ -50,11 +50,33 @@ using namespace muduo;
 using namespace muduo::net;
 using namespace muduo::net::detail;
 
-TimerQueue::TimerQueue(EventLoop* loop) : loop_(loop),
-timerfd_(createTimerfd()),
-timerfdChannel_(loop, timerfd_),
-timers_(),
-callingExpiredTimers_(false)
+TimerQueue::TimerQueue(EventLoop* loop) 
+                    : loop_(loop),
+                    timerfd_(createTimerfd()),
+                    timerfdChannel_(loop, timerfd_),
+                    timers_(),
+                    callingExpiredTimers_(false)
 {
+    /*
+        muduo::net::Channel muduo::net::TimerQueue::timerfdChannel_
+        void setReadCallback(ReadEventCallback cb)
+            { readCallback_ = std::move(cb); }
+    */
+    timerfdChannel_.setReadCallback(std::bind(&TimerQueue::handleRead, this));
+    timerfdChannel_.enableReading();
+}
 
+TimerQueue::~TimerQueue() {
+    timerfdChannel_.disableAll();
+    timerfdChannel_.remove();
+    ::close(timerfd_);
+    for(const Entry& timer : timers_) {
+        delete timer.second;
+    }
+}
+
+TimerId TimerQueue::addTimer(TimerCallback cb, TimeStamp when, double interval) {
+    Timer* timer = new Timer(std::move(cb), when, interval);
+    loop_->runInLoop(std::bind(&TimerQueue::addTimerInLoop, this, timer));
+    
 }

@@ -25,11 +25,19 @@ namespace muduo{
         
         class EventLoop : noncopyable {
             public:
+            typedef std::function<void()> Functor;
             EventLoop();
             ~EventLoop();
 
             void loop();
             void quit();
+
+            TimeStamp pollReturnTime() const {return pollReturnTime_;}
+            int64_t iteration()        const { return iteration_; }
+
+            void runInLoop(Functor cb);
+
+            void queueInLoop(Functor cb);
 
             // internal usage
             void wakeup();
@@ -62,7 +70,9 @@ namespace muduo{
             bool looping_;
             std::atomic<bool> quit_;
             bool eventHandling_; /* atomic */
+            int64_t iteration_;
             const pid_t threadId_;            // 本对象所属的线程
+            TimeStamp pollReturnTime_;
             std::unique_ptr<Poller> poller_;
             int wakeupFd_;
             // scratch variables

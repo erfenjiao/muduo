@@ -99,3 +99,9 @@ string Channel::eventsToString(int fd, int ev)
 
     return oss.str();
 }
+
+void Channel::remove() {
+    assert(isNoneEvent());
+    addedToLoop_ = false;
+    loop_->removeChannel(this);
+}

@@ -11,6 +11,7 @@
 
 #include "../base/Logging.h"
 #include "../base/CurrentThread.h"
+#include "../base/Mutex.h"
 
 #include <algorithm>
 
@@ -66,6 +67,8 @@ EventLoop* EventLoop::getEventLoopOfCurrentThread(){
 */
 EventLoop::EventLoop():looping_(false), 
                         quit_(false),
+                        eventHandling_(false),
+                        iteration_(0),
                         threadId_(CurrentThread::tid()),
                         poller_(Poller::newDefaultPoller(this))
                          {
@@ -80,6 +83,10 @@ EventLoop::EventLoop():looping_(false),
 }
 
 EventLoop::~EventLoop() {
+    LOG_DEBUG << "EventLoop " << this << " of thread " << threadId_
+            << " destructs in thread " << CurrentThread::tid();
+    // wakeupChannel_->disableAll();
+    // wakeupChannel_->remove();
     assert(!looping_);
     t_loopInThisThread = NULL;
 }
@@ -172,3 +179,19 @@ void EventLoop::quit() {
 //         LOG_ERROR << "EventLoop::wakeup() writes " << n << " bytes instead of 8";
 //     }
 // }
+
+void EventLoop::runInLoop(Functor cb) {
+    if(isInLoopThread()){
+        cb();
+    }
+    else{
+        queueInLoop(std::move(cb));
+    }
+}
+
+// void queueInLoop(Functor cb);
+void EventLoop::queueInLoop(Functor cb) {
+    {
+        MutexLockGuard(mutex_);
+    }
+}

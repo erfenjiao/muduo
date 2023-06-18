@@ -2,6 +2,9 @@
 #define MUDUO_NET_CHANNEL_H
 
 // 核心：事件分发机制
+/*
+    Channel 会将不同的IO事件分发给不同的回调，例如ReadCallback,Writecallback
+*/
 
 #include <functional>
 
@@ -39,6 +42,8 @@ namespace muduo
             void setErrorCallback(EventCallback cb)
             { errorCallback_ = std::move(cb); }
 
+            // TODO tie()
+
 
             int fd() const {
                 return fd_;
@@ -56,10 +61,14 @@ namespace muduo
                 return events_ == kNoneEvent;
             }
 
-            void enableReading() {
-                events_ |= kReadEvent;
-                update();
-            }
+            void enableReading()   { events_ |= kReadEvent;   update();  }
+            void disableReading()  { events_ &= ~kReadEvent;  update();  }
+            void enableWriting()   { events_ |= kWriteEvent;  update();  }
+            void disableWriting()  { events_ &= ~kWriteEvent; update();  }
+            void disableAll()      { events_  = kNoneEvent;   update();  }
+            bool isWriting() const { return events_ & kWriteEvent;       }
+            bool isReading() const { return events_ & kReadEvent;        }
+
 
             // for Poller
             int index() {
@@ -75,6 +84,8 @@ namespace muduo
             EventLoop* ownerLoop() {
                 return loop_;
             }
+
+            void remove();
 
             private:
             static string eventsToString(int fd, int ev);
