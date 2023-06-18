@@ -15,6 +15,7 @@
 
 #include <sstream>
 #include <assert.h>
+#include <iostream>
 
 namespace muduo {
 
@@ -90,6 +91,7 @@ Logger::Impl::Impl(LogLevel level, int savedErrno, const SourceFile& file, int l
     line_(line),
     basename_(file)
 {
+    //std::cout << "Logger::Impl::Impl()" << std::endl;
     formatTime();
     CurrentThread::tid();
     stream_ << T(CurrentThread::tidString(), CurrentThread::tidStringLength());

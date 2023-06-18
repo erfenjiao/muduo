@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include <inttypes.h>
+#include <iostream>
 
 using namespace muduo;
 
@@ -36,8 +37,7 @@ string TimeStamp::toString() const {
   函数的参数 showMicroseconds 控制是否显示微秒，如果为 true，则输出精确到微秒的时间；否则，只输出时分秒。
 */
 string TimeStamp::toFormattedString(bool showMicroseconds) const {
-    LOG_INFO << "TimeStamp::toFormattedString()";
-
+    std::cout << "TimeStamp::toFormattedString()" << std::endl;
     char buf[64] = {0};
     // 将毫秒级的时间戳 microSecondsSinceEpoch_ 转换成秒级的时间戳 seconds。
     time_t seconds = static_cast<time_t>(microSecondsSinceEpoch_ / KMicroSencondsPerSecond);
@@ -84,8 +84,10 @@ string TimeStamp::toFormattedString(bool showMicroseconds) const {
 }
 
 // Get time of now. 返回当前时间戳。
+// 可能此函数中出现了段错误
 TimeStamp TimeStamp::now(){
-    LOG_INFO << "now()" ;
+    //LOG_INFO << "now" ;
+    //std::cout << "now()" << std::endl;
     struct timeval tv;
     gettimeofday(&tv, NULL);
     int64_t seconds = tv.tv_sec;

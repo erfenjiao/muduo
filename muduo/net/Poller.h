@@ -36,7 +36,7 @@ namespace muduo
             // Polls the I/O events
             // Must be called in the loop thread.
             // Poller 的核心功能，调用 poll(2)获得当前活动的 IO 事件，然后填充调用方传入的 activeChannels，并返回 poll(2)return 的时刻
-            virtual TimeStamp poll(int timeoutMs, ChannelList* activeChannels);
+            virtual TimeStamp poll(int timeoutMs, ChannelList* activeChannels) = 0;
 
             /*
                 Changes the interested I/O events.
@@ -50,6 +50,8 @@ namespace muduo
             virtual void removeChannel(Channel* channel) = 0;
 
             virtual bool hasChannel(Channel* channel) const;
+
+            static Poller* newDefaultPoller(EventLoop* loop);
 
             void assertInLoopThread() const{
                 ownerLoop_->assertInLoopThread();

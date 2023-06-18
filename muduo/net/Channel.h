@@ -69,11 +69,16 @@ namespace muduo
                 index_ = idx;
             }
 
+            string reventsToString() const;
+            string eventsToString() const;
+
             EventLoop* ownerLoop() {
                 return loop_;
             }
 
             private:
+            static string eventsToString(int fd, int ev);
+
             void update();
 
             /* 必须初始化。在 cc 中 */
@@ -86,6 +91,9 @@ namespace muduo
             int events_;       // IO 事件
             int revent_;       // 目前活动的事件
             int index_;
+
+            bool eventHandling_;
+            bool addedToLoop_;
 
             ReadEventCallback readCallback_;
             EventCallback writeCallback_;

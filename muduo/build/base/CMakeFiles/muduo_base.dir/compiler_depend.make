@@ -1092,7 +1092,8 @@ base/CMakeFiles/muduo_base.dir/Logging.cc.o: ../base/Logging.cc \
   /usr/include/c++/11/ostream \
   /usr/include/c++/11/bits/ostream.tcc \
   /usr/include/c++/11/bits/istream.tcc \
-  /usr/include/c++/11/bits/sstream.tcc
+  /usr/include/c++/11/bits/sstream.tcc \
+  /usr/include/c++/11/iostream
 
 base/CMakeFiles/muduo_base.dir/Thread.cc.o: ../base/Thread.cc \
   /usr/include/stdc-predef.h \
@@ -1562,7 +1563,22 @@ base/CMakeFiles/muduo_base.dir/TimeStamp.cc.o: ../base/TimeStamp.cc \
   ../base/noncopyable.h \
   ../base/StringPiece.h \
   /usr/include/x86_64-linux-gnu/sys/time.h \
-  /usr/include/inttypes.h
+  /usr/include/inttypes.h \
+  /usr/include/c++/11/iostream \
+  /usr/include/c++/11/ostream \
+  /usr/include/c++/11/ios \
+  /usr/include/c++/11/bits/basic_ios.h \
+  /usr/include/c++/11/bits/locale_facets.h \
+  /usr/include/c++/11/cwctype \
+  /usr/include/wctype.h \
+  /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_base.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h \
+  /usr/include/c++/11/bits/locale_facets.tcc \
+  /usr/include/c++/11/bits/basic_ios.tcc \
+  /usr/include/c++/11/bits/ostream.tcc \
+  /usr/include/c++/11/istream \
+  /usr/include/c++/11/bits/istream.tcc
 
 base/CMakeFiles/muduo_base.dir/TimeZone.cc.o: ../base/TimeZone.cc \
   /usr/include/stdc-predef.h \
@@ -2089,6 +2105,8 @@ base/CMakeFiles/muduo_base.dir/TimeZone.cc.o: ../base/TimeZone.cc \
 /usr/include/c++/11/bits/functexcept.h:
 
 /usr/include/c++/11/streambuf:
+
+/usr/include/c++/11/iostream:
 
 /usr/include/boost/config/workaround.hpp:
 

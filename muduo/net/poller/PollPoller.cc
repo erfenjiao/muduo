@@ -55,7 +55,6 @@ TimeStamp PollPoller::poll(int timeoutMs, ChannelList* activeChannels) {
 
         if( numEvents > 0) {
             LOG_TRACE << numEvents << " events happened";
-
             fillActiveChannels(numEvents, activeChannels);
         } 
         else if( numEvents == 0) {
@@ -115,7 +114,7 @@ void PollPoller::fillActiveChannels(int numEvents,
 */
 
 void PollPoller::updateChannel(Channel* channel) {
-    
+    LOG_INFO << "PollPoller::updateChannel";
     Poller::assertInLoopThread();
 
     /*

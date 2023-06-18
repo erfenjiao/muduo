@@ -17,6 +17,7 @@ void timeout(muduo::TimeStamp timestamp) {
 }
 
 int main() {
+    LOG_INFO << "muduo::net::EventLoop loop";
     muduo::net::EventLoop loop;
     // 将其地址存储在指针变量g_loop中
     g_loop = &loop;
@@ -39,17 +40,15 @@ int main() {
     struct itimerspec howlong;
     bzero(&howlong, sizeof howlong);
     howlong.it_value.tv_sec = 5;
-    //::timer_settime(timerfd, 0, &howlong, NULL);
+    ::timer_settime(reinterpret_cast<timer_t>(timerfd), 0, &howlong, NULL);
+    // 错误的：
+    //::timer_settime(*reinterpret_cast<timer_t*>(timerfd), 0, &howlong, NULL);
 
     char buf[1024];
     ssize_t n = ::read(timerfd, buf, sizeof(buf));
     if(n < 0) {
         LOG_INFO << "test3:line47 n < 0";
     }
-
-    //::timer_settime((timer_t)*((int*)buf), 0, &howlong, NULL);
-    // 使用 reinterpret_cast 或 static_cast 进行类型转换
-    ::timer_settime(*reinterpret_cast<timer_t*>(buf), 0, &howlong, nullptr);
 
     loop.loop();
 

@@ -30,12 +30,18 @@ Channel::Channel(EventLoop* loop, int fd__)
 {}
 
 Channel::~Channel() {
-
+  assert(!eventHandling_);
+  assert(!addedToLoop_);
+  if (loop_->isInLoopThread())
+  {
+    assert(!loop_->hasChannel(this));
+  }
 }
 
 void Channel::update() {
     // 调用 Poller::updateChannel() 由于Channel没有包含EventLoop.h，因此必须定义在Channel.cc 中
     // 是 EventLoop.h 中的
+    addedToLoop_ = true;
     loop_->updateChannel(this);
 }
 
@@ -45,7 +51,7 @@ void Channel::update() {
     注意：不能一边遍历 pollfds_ ， 一边调用 Channel::handleEvent()。
 */
 void Channel::handleEvent() {
-    LOG_TRACE << "Channel::handleEvent():\n" ;
+    LOG_INFO << "Channel::handleEvent():\n" ;
     
     if(revent_ & POLLNVAL) {
         LOG_WARN << "Channel::handle_event() POLLNVAL";
@@ -60,4 +66,36 @@ void Channel::handleEvent() {
     if(revent_ &  POLLOUT) {
         if(writeCallback_) writeCallback_();
     }
+}
+
+string Channel::reventsToString() const
+{
+    return eventsToString(fd_, revent_);
+}
+
+string Channel::eventsToString() const
+{
+    return eventsToString(fd_, events_);
+}
+
+string Channel::eventsToString(int fd, int ev)
+{
+    std::ostringstream oss;
+    oss << fd << ": ";
+    if (ev & POLLIN)
+        oss << "IN ";
+    if (ev & POLLPRI)
+        oss << "PRI ";
+    if (ev & POLLOUT)
+        oss << "OUT ";
+    if (ev & POLLHUP)
+        oss << "HUP ";
+    if (ev & POLLRDHUP)
+        oss << "RDHUP ";
+    if (ev & POLLERR)
+        oss << "ERR ";
+    if (ev & POLLNVAL)
+        oss << "NVAL ";
+
+    return oss.str();
 }

@@ -66,7 +66,8 @@ EventLoop* EventLoop::getEventLoopOfCurrentThread(){
 */
 EventLoop::EventLoop():looping_(false), 
                         quit_(false),
-                        threadId_(CurrentThread::tid())
+                        threadId_(CurrentThread::tid()),
+                        poller_(Poller::newDefaultPoller(this))
                          {
     LOG_TRACE << "EventLoop created " << this << " in thread " << threadId_;
 
@@ -127,7 +128,12 @@ void EventLoop::updateChannel(Channel* channel) {
     assert(channel->ownerLoop() == this);
     assertInLoopThread();
 
-    poller_->updateChannel(channel);
+    //poller_->updateChannel(channel);
+    if (poller_) {
+        poller_->updateChannel(channel);
+    }else {
+        LOG_INFO << "poller_ 是空指针";
+    }
 }
 
 

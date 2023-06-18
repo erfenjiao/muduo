@@ -257,6 +257,54 @@ Poller.cc.s:
 	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/Poller.cc.s
 .PHONY : Poller.cc.s
 
+poller/DefaultPoller.o: poller/DefaultPoller.cc.o
+.PHONY : poller/DefaultPoller.o
+
+# target to build an object file
+poller/DefaultPoller.cc.o:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/poller/DefaultPoller.cc.o
+.PHONY : poller/DefaultPoller.cc.o
+
+poller/DefaultPoller.i: poller/DefaultPoller.cc.i
+.PHONY : poller/DefaultPoller.i
+
+# target to preprocess a source file
+poller/DefaultPoller.cc.i:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/poller/DefaultPoller.cc.i
+.PHONY : poller/DefaultPoller.cc.i
+
+poller/DefaultPoller.s: poller/DefaultPoller.cc.s
+.PHONY : poller/DefaultPoller.s
+
+# target to generate assembly for a file
+poller/DefaultPoller.cc.s:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/poller/DefaultPoller.cc.s
+.PHONY : poller/DefaultPoller.cc.s
+
+poller/PollPoller.o: poller/PollPoller.cc.o
+.PHONY : poller/PollPoller.o
+
+# target to build an object file
+poller/PollPoller.cc.o:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/poller/PollPoller.cc.o
+.PHONY : poller/PollPoller.cc.o
+
+poller/PollPoller.i: poller/PollPoller.cc.i
+.PHONY : poller/PollPoller.i
+
+# target to preprocess a source file
+poller/PollPoller.cc.i:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/poller/PollPoller.cc.i
+.PHONY : poller/PollPoller.cc.i
+
+poller/PollPoller.s: poller/PollPoller.cc.s
+.PHONY : poller/PollPoller.s
+
+# target to generate assembly for a file
+poller/PollPoller.cc.s:
+	cd /home/erfenjiao/project/muduo/muduo/build && $(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/poller/PollPoller.cc.s
+.PHONY : poller/PollPoller.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -280,6 +328,12 @@ help:
 	@echo "... Poller.o"
 	@echo "... Poller.i"
 	@echo "... Poller.s"
+	@echo "... poller/DefaultPoller.o"
+	@echo "... poller/DefaultPoller.i"
+	@echo "... poller/DefaultPoller.s"
+	@echo "... poller/PollPoller.o"
+	@echo "... poller/PollPoller.i"
+	@echo "... poller/PollPoller.s"
 .PHONY : help
 
 
