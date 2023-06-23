@@ -131,6 +131,10 @@ void EventLoop::loop() {
 
     LOG_TRACE << "EventLoop" << this << " stop looping";
     looping_ = false;
+    /*
+        执行PendingFunctors_中的任务回调
+    */
+    doPendingFunctors();
 }
 
 void EventLoop::abortNotLoopThread() {
@@ -214,6 +218,12 @@ void EventLoop::queueInLoop(Functor cb) {
         MutexLockGuard lock(mutex_);
         pendingFunctors_.push_back(std::move(cb));
     }
+    /*
+        必要时唤醒
+        两种情况：
+        1. 如果调用queueInLoop（）的线程不是IO线程
+        2. 如果在IO线程中调用，但是现在正在调用 pending functor
+    */
     if (!isInLoopThread() || callingPendingFunctors_)
     {
         wakeup();

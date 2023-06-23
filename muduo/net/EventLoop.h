@@ -94,14 +94,16 @@ namespace muduo{
 
             void abortNotLoopThread();
 
-            /// TODO
+            void handleRead();
+
+            void doPendingFunctors();
 
             typedef std::vector<Channel*> ChannelList;
 
             bool looping_;
             std::atomic<bool> quit_;
-            bool eventHandling_; /* atomic */
-            bool callingPendingFunctors_; /* atomic */
+            bool eventHandling_;           /* atomic */
+            bool callingPendingFunctors_;  /* atomic */
             int64_t iteration_;
             const pid_t threadId_;            // 本对象所属的线程
             TimeStamp pollReturnTime_;
@@ -109,6 +111,9 @@ namespace muduo{
             std::unique_ptr<TimerQueue> timerQueue_;
             int wakeupFd_;
             
+            /*
+                用于处理weakupFd_上的readbable事件，将事件分发给handleRead（）函数
+            */
             std::unique_ptr<Channel> wakeupChannel_;
             boost::any context_;
             
@@ -116,6 +121,9 @@ namespace muduo{
             ChannelList activeChannels_;
             Channel* currentActiveChannel_;
 
+            /*
+                暴露给了其他线程，所以使用mutex保护
+            */
             mutable MutexLock mutex_;
             std::vector<Functor> pendingFunctors_ GUARDED_BY(mutex_);
 
