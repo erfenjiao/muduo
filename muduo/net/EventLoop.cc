@@ -10,6 +10,7 @@
 #include "Poller.h"
 #include "TimerId.h"
 #include "TimerQueue.h"
+#include "SocketsOps.h"
 
 #include "../base/Logging.h"
 #include "../base/CurrentThread.h"
@@ -190,6 +191,9 @@ void EventLoop::quit() {
 
 void EventLoop::wakeup() {
     uint64_t one = 1;
+    /*
+        对 wakeupFd_ 写入数据
+    */
     ssize_t n = sockets::write(wakeupFd_, &one, sizeof one);
     if(n != sizeof one) {
         LOG_ERROR << "EventLoop::wakeup() writes " << n << " bytes instead of 8";
