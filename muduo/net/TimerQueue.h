@@ -9,6 +9,10 @@
 #include "Callbacks.h"
 #include "Channel.h"
 
+/*
+    根据当前时间，高效的寻找已经到期的Timer，也要高效的添加和删除Timer
+*/
+
 namespace muduo
 {
     namespace net
@@ -33,10 +37,9 @@ namespace muduo
 
             private:
 
-             // FIXME: use unique_ptr<Timer> instead of raw pointers.
-            // This requires heterogeneous comparison lookup (N3465) from C++14
-            // so that we can find an T* in a set<unique_ptr<T>>.
+       
             typedef std::pair<TimeStamp, Timer*> Entry;
+            // set 因为只有key没有alue
             typedef std::set<Entry> TimerList;
             typedef std::pair<Timer*, int64_t> ActiveTimer;
             typedef std::set<ActiveTimer> ActiveTimerSet;
@@ -54,13 +57,14 @@ namespace muduo
 
             EventLoop* loop_;
             const int timerfd_;
+            // 观察 Timer 上的 readable 事件
             Channel timerfdChannel_;
             // Timer list sorted by expiration
             TimerList timers_;
 
             // for cancel()
             ActiveTimerSet activeTimers_;
-            bool callingExpiredTimers_; /* atomic */
+            bool callingExpiredTimers_;       /* atomic */
             ActiveTimerSet cancelingTimers_;
 
         };
