@@ -192,6 +192,13 @@ void EventLoop::wakeup() {
     }
 }
 
+/*
+    定时器接口应该允许跨线程访问，比方在某个IO线程中执行超时回调，这就有线程安全方面的问题。
+    muduo的解决方式是：把对TimerQueu的操作转到IO线程来执行，这就需要用到EventLoop::runInLoop
+    在它的线程中执行某个用户任务的回调。
+    如果在当前 IO 线程中调用这个函数，回调会同步进行；
+    如果用户在其他线程中调用，cb会加入队列
+*/
 void EventLoop::runInLoop(Functor cb) {
     if(isInLoopThread()){
         cb();
@@ -214,6 +221,10 @@ void EventLoop::queueInLoop(Functor cb) {
 
 }
 
+/*
+    定时器接口，这三个接口都转而调用TimerQueue::addTimer()。
+
+*/
 TimerId EventLoop::runAt(TimeStamp time, TimerCallback cb) {
     return timerQueue_->addTimer(cb, time, 0.0);
 }
