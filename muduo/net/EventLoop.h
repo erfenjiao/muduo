@@ -4,6 +4,9 @@
 #include "../../project/muduo/muduo/base/noncopyable.h"
 #include "../../project/muduo/muduo/base/CurrentThread.h"
 
+#include "Callbacks.h"
+#include "TimerQueue.h"
+
 #include <atomic>
 #include <functional>
 #include <vector>
@@ -39,6 +42,22 @@ namespace muduo{
 
             void queueInLoop(Functor cb);
 
+            size_t queueSize() const;
+
+            // timers
+
+            /// Runs callback at 'time'
+            TimerId runAt(TimeStamp time, TimerCallback cb);
+
+            ///
+            TimerId runAfter(double delay, TimerCallback cb);
+
+            /// 
+            TimerId runEvery(double interval, TimerCallback);
+
+            // cancles the timer
+            void cannel(TimerId timerid);
+
             // internal usage
             void wakeup();
             void updateChannel(Channel* channel);
@@ -58,6 +77,16 @@ namespace muduo{
             bool isInLoopThread() const {
                 return threadId_ == CurrentThread::tid();
             }
+            bool eventHandling() const { return eventHandling_; }
+
+            void setContext(const boost::any& context)
+            { context_ = context; }
+
+            const boost::any& getContext() const
+            { return context_; }
+
+            boost::any* getMutableContext()
+            { return &context_; }
 
             static EventLoop* getEventLoopOfCurrentThread();
 
@@ -65,19 +94,30 @@ namespace muduo{
 
             void abortNotLoopThread();
 
+            /// TODO
+
             typedef std::vector<Channel*> ChannelList;
 
             bool looping_;
             std::atomic<bool> quit_;
             bool eventHandling_; /* atomic */
+            bool callingPendingFunctors_; /* atomic */
             int64_t iteration_;
             const pid_t threadId_;            // 本对象所属的线程
             TimeStamp pollReturnTime_;
             std::unique_ptr<Poller> poller_;
+            std::unique_ptr<TimerQueue> timerQueue_;
             int wakeupFd_;
+            
+            std::unique_ptr<Channel> wakeupChannel_;
+            boost::any context_;
+            
             // scratch variables
             ChannelList activeChannels_;
             Channel* currentActiveChannel_;
+
+            mutable MutexLock mutex_;
+            std::vector<Functor> pendingFunctors_ GUARDED_BY(mutex_);
 
         };
     }

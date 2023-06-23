@@ -8,6 +8,8 @@
 #include "EventLoop.h"
 #include "Channel.h"
 #include "Poller.h"
+#include "TimerId.h"
+#include "TimerQueue.h"
 
 #include "../base/Logging.h"
 #include "../base/CurrentThread.h"
@@ -18,7 +20,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <assert.h>
-
+#include <sys/eventfd.h>
 
 using namespace muduo;
 using namespace muduo::net;
@@ -29,30 +31,30 @@ namespace
 
     const int kPollTimeMs = 10000;
 
-    // int createEventfd()
-    // {
-    // int evtfd = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
-    // if (evtfd < 0)
-    // {
-    //     LOG_SYSERR << "Failed in eventfd";
-    //     abort();
-    // }
-    // return evtfd;
-    // }
+    int createEventfd()
+    {
+    int evtfd = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
+    if (evtfd < 0)
+    {
+        LOG_SYSERR << "Failed in eventfd";
+        abort();
+    }
+    return evtfd;
+    }
 
-    // #pragma GCC diagnostic ignored "-Wold-style-cast"
-    // class IgnoreSigPipe
-    // {
-    // public:
-    // IgnoreSigPipe()
-    // {
-    //     ::signal(SIGPIPE, SIG_IGN);
-    //     // LOG_TRACE << "Ignore SIGPIPE";
-    // }
-    // };
-    // #pragma GCC diagnostic error "-Wold-style-cast"
+    #pragma GCC diagnostic ignored "-Wold-style-cast"
+    class IgnoreSigPipe
+    {
+    public:
+        IgnoreSigPipe()
+        {
+            ::signal(SIGPIPE, SIG_IGN);
+            // LOG_TRACE << "Ignore SIGPIPE";
+        }
+    };
+    #pragma GCC diagnostic error "-Wold-style-cast"
 
-    // IgnoreSigPipe initObj;
+    IgnoreSigPipe initObj;
 }  // namespace
 
 /* 
@@ -68,9 +70,14 @@ EventLoop* EventLoop::getEventLoopOfCurrentThread(){
 EventLoop::EventLoop():looping_(false), 
                         quit_(false),
                         eventHandling_(false),
+                        callingPendingFunctors_(false),
                         iteration_(0),
                         threadId_(CurrentThread::tid()),
-                        poller_(Poller::newDefaultPoller(this))
+                        poller_(Poller::newDefaultPoller(this)),
+                        timerQueue_(new TimerQueue(this)),
+                        wakeupFd_(createEventfd()),
+                        wakeupChannel_(new Channel(this, wakeupFd_)),
+                        currentActiveChannel_(NULL)
                          {
     LOG_TRACE << "EventLoop created " << this << " in thread " << threadId_;
 
@@ -80,6 +87,10 @@ EventLoop::EventLoop():looping_(false),
     else {
         t_loopInThisThread = this;
     }
+//     wakeupChannel_->setReadCallback(
+//       std::bind(&EventLoop::handleRead, this));
+//   // we are always reading the wakeupfd
+//   wakeupChannel_->enableReading();
 }
 
 EventLoop::~EventLoop() {
@@ -102,6 +113,7 @@ void EventLoop::loop() {
 
     looping_ = true;
     quit_ = false;
+    // LOG_TRACE << "EventLoop " << this << " start looping";
 
     /*
         新增了quit() 成员函数，还加了几个数据成员，并在构造函数里初始化它们
@@ -172,13 +184,13 @@ void EventLoop::quit() {
     }
 }
 
-// void EventLoop::wakeup() {
-//     uint64_t one = 1;
-//     ssize_t n = sockets::write(wakeupFd_, &one, sizeof one);
-//     if(n != sizeof one) {
-//         LOG_ERROR << "EventLoop::wakeup() writes " << n << " bytes instead of 8";
-//     }
-// }
+void EventLoop::wakeup() {
+    uint64_t one = 1;
+    ssize_t n = sockets::write(wakeupFd_, &one, sizeof one);
+    if(n != sizeof one) {
+        LOG_ERROR << "EventLoop::wakeup() writes " << n << " bytes instead of 8";
+    }
+}
 
 void EventLoop::runInLoop(Functor cb) {
     if(isInLoopThread()){
@@ -192,6 +204,31 @@ void EventLoop::runInLoop(Functor cb) {
 // void queueInLoop(Functor cb);
 void EventLoop::queueInLoop(Functor cb) {
     {
-        MutexLockGuard(mutex_);
+        MutexLockGuard lock(mutex_);
+        pendingFunctors_.push_back(std::move(cb));
     }
+    if (!isInLoopThread() || callingPendingFunctors_)
+    {
+        wakeup();
+    }
+
 }
+
+TimerId EventLoop::runAt(TimeStamp time, TimerCallback cb) {
+    return timerQueue_->addTimer(cb, time, 0.0);
+}
+
+TimerId EventLoop::runAfter(double delay, TimerCallback cb){
+    TimeStamp time(addTime(TimeStamp::now(), delay));
+    return runAt(time, cb);
+}
+
+TimerId EventLoop::runEvery(double interval, TimerCallback cb){
+    TimeStamp time(addTime(TimeStamp::now(), interval));
+    /*
+        std::move
+        用于将对象转移或复制到另一个位置。它实际上并不执行任何操作，而是通过返回指向输入参数的右值引用来告诉编译器该对象可以被移动。
+    */
+    return timerQueue_->addTimer(std::move(cb), time, interval);
+}
+
