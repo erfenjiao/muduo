@@ -220,6 +220,7 @@ void EventLoop::runInLoop(Functor cb) {
 void EventLoop::queueInLoop(Functor cb) {
     {
         MutexLockGuard lock(mutex_);
+        // std::vector<muduo::net::EventLoop::Functor> muduo::net::EventLoop::pendingFunctors_
         pendingFunctors_.push_back(std::move(cb));
     }
     /*
@@ -257,3 +258,25 @@ TimerId EventLoop::runEvery(double interval, TimerCallback cb){
     return timerQueue_->addTimer(std::move(cb), time, interval);
 }
 
+void EventLoop::handleRead()
+{
+  uint64_t one = 1;
+  ssize_t n = sockets::read(wakeupFd_, &one, sizeof one);
+  if (n != sizeof one)
+  {
+    LOG_ERROR << "EventLoop::handleRead() reads " << n << " bytes instead of 8";
+  }
+}
+
+void EventLoop::doPendingFunctors(){
+    std::vector<Functor> functors;
+    callingPendingFunctors_ = true;
+    {
+        MutexLockGuard lock(mutex_);
+        functors.swap(pendingFunctors_);
+    }
+    for(size_t i = 0 ; i < functors.size() ; i++) {
+        functors[i]();
+    }
+    callingPendingFunctors_ = false;
+}

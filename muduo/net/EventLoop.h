@@ -6,6 +6,7 @@
 
 #include "Callbacks.h"
 #include "TimerQueue.h"
+#include "Channel.h"
 
 #include <atomic>
 #include <functional>
@@ -14,7 +15,6 @@
 #include <boost/any.hpp>
 #include <memory>
 
-using namespace std;
 /**
  * 事件分发器
 */

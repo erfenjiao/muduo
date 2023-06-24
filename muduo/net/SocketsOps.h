@@ -12,6 +12,7 @@ namespace sockets
 {
 
     ssize_t write(int sockfd, const void *buf, size_t count);
+    ssize_t read (int sockfd, const void *buf, size_t count);
 
 }  // namespace sockets
 }  // namespace net

@@ -41,6 +41,30 @@ namespace muduo
                 }
                 return timerfd;
             }
+
+            struct timespec howMuchTimeFromNow(TimeStamp when){
+                int64_t microseconds = when.microSecondsSinceEpoch() - TimeStamp::now().microSecondsSinceEpoch();
+                if(microseconds < 100){
+                    microseconds = 100;
+                }
+                struct timespec ts;
+                ts.tv_sec = static_cast<time_t>(microseconds/TimeStamp::KMicroSencondsPerSecond);
+                ts.tv_nsec = static_cast<long>(
+                    (microseconds % TimeStamp::KMicroSencondsPerSecond) * 1000);
+                return ts;
+            }
+
+            void resetTimerfd(int timerfd, TimeStamp expiration){
+                struct itimerspec newValue;
+                struct itimerspec oldValue;
+                memZero(&newValue, sizeof newValue);
+                memZero(&oldValue, sizeof oldValue);
+                newValue.it_value = howMuchTimeFromNow(expiration);
+                int ret = ::timerfd_settime(timerfd, 0, &newValue, &oldValue);
+                if(ret){
+                    LOG_SYSERR << "timerfd_settime()";
+                }
+            }
         } // namespace detail
         
     } // namespace net
@@ -55,7 +79,7 @@ TimerQueue::TimerQueue(EventLoop* loop)
                     : loop_(loop),
                     timerfd_(createTimerfd()),
                     timerfdChannel_(loop, timerfd_),
-                    timers_(),
+                    timers_(),                    // TimerList timers_;
                     callingExpiredTimers_(false)
 {
     /*
@@ -77,10 +101,42 @@ TimerQueue::~TimerQueue() {
 }
 
 TimerId TimerQueue::addTimer(TimerCallback cb, TimeStamp when, double interval) {
+    LOG_INFO << "cb = ", cb;
     Timer* timer = new Timer(std::move(cb), when, interval);
     loop_->runInLoop(std::bind(&TimerQueue::addTimerInLoop, this, timer));
-    
+    return TimerId(timer, timer->sequence());
 }
+
+void TimerQueue::cancel(TimerId timerId) {
+    loop_->runInLoop(std::bind(&TimerQueue::cancelInLoop, this, timerId));
+}
+
+/*
+    修改定时器列表
+*/
+void TimerQueue::addTimerInLoop(Timer* timer){
+    loop_->assertInLoopThread();
+    bool earliestChanged = insert(timer);
+
+    if(earliestChanged) {
+        resetTimerfd(timerfd_, timer->expiration());
+    }
+}
+
+bool TimerQueue::insert(Timer* timer) {
+    loop_->assertInLoopThread();
+    assert(timers_.size() == activeTimers_.size());
+    bool earliestChanged = false;
+
+    //TimeStamp expiration() const  { return expiration_; }
+    TimeStamp when = timer->expiration();
+    TimerList::iterator it = timers_.begin();
+    if(it == timers_.end() || when < it->first){
+        earliestChanged = true;
+    }
+
+}
+
 
 std::vector<TimerQueue::Entry> TimerQueue::getExpired(TimeStamp now) {
     std::vector<Entry> expired;
