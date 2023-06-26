@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = /home/erfenjiao/project/muduo/muduo/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -94,51 +84,6 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -172,69 +117,47 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named muduo_base
+# Target rules for targets named mymuduo
 
 # Build rule for target.
-muduo_base: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 muduo_base
-.PHONY : muduo_base
+mymuduo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mymuduo
+.PHONY : mymuduo
 
 # fast build rule for target.
-muduo_base/fast:
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/build
-.PHONY : muduo_base/fast
+mymuduo/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/build
+.PHONY : mymuduo/fast
 
-#=============================================================================
-# Target rules for targets named muduo_net
+# target to build an object file
+Logger.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Logger.o
+.PHONY : Logger.o
 
-# Build rule for target.
-muduo_net: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 muduo_net
-.PHONY : muduo_net
+# target to preprocess a source file
+Logger.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Logger.i
+.PHONY : Logger.i
 
-# fast build rule for target.
-muduo_net/fast:
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/build
-.PHONY : muduo_net/fast
+# target to generate assembly for a file
+Logger.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Logger.s
+.PHONY : Logger.s
 
-#=============================================================================
-# Target rules for targets named eventloopthread_unittest
+# target to build an object file
+Timestamp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Timestamp.o
+.PHONY : Timestamp.o
 
-# Build rule for target.
-eventloopthread_unittest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 eventloopthread_unittest
-.PHONY : eventloopthread_unittest
+# target to preprocess a source file
+Timestamp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Timestamp.i
+.PHONY : Timestamp.i
 
-# fast build rule for target.
-eventloopthread_unittest/fast:
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloopthread_unittest.dir/build.make net/tests/CMakeFiles/eventloopthread_unittest.dir/build
-.PHONY : eventloopthread_unittest/fast
-
-#=============================================================================
-# Target rules for targets named eventloop_unittest
-
-# Build rule for target.
-eventloop_unittest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 eventloop_unittest
-.PHONY : eventloop_unittest
-
-# fast build rule for target.
-eventloop_unittest/fast:
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/build
-.PHONY : eventloop_unittest/fast
-
-#=============================================================================
-# Target rules for targets named test3
-
-# Build rule for target.
-test3: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test3
-.PHONY : test3
-
-# fast build rule for target.
-test3/fast:
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/build
-.PHONY : test3/fast
+# target to generate assembly for a file
+Timestamp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Timestamp.s
+.PHONY : Timestamp.s
 
 # Help Target
 help:
@@ -243,17 +166,14 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... eventloop_unittest"
-	@echo "... eventloopthread_unittest"
-	@echo "... muduo_base"
-	@echo "... muduo_net"
-	@echo "... test3"
+	@echo "... mymuduo"
+	@echo "... Logger.o"
+	@echo "... Logger.i"
+	@echo "... Logger.s"
+	@echo "... Timestamp.o"
+	@echo "... Timestamp.i"
+	@echo "... Timestamp.s"
 .PHONY : help
 
 

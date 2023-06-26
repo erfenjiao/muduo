@@ -63,220 +63,42 @@ CMAKE_BINARY_DIR = /home/erfenjiao/project/muduo/muduo/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: base/all
-all: net/all
+all: CMakeFiles/mymuduo.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: base/preinstall
-preinstall: net/preinstall
+preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: base/clean
-clean: net/clean
+clean: CMakeFiles/mymuduo.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory base
-
-# Recursive "all" directory target.
-base/all: base/CMakeFiles/muduo_base.dir/all
-base/all: base/tests/all
-.PHONY : base/all
-
-# Recursive "preinstall" directory target.
-base/preinstall: base/tests/preinstall
-.PHONY : base/preinstall
-
-# Recursive "clean" directory target.
-base/clean: base/CMakeFiles/muduo_base.dir/clean
-base/clean: base/tests/clean
-.PHONY : base/clean
-
-#=============================================================================
-# Directory level rules for directory base/tests
-
-# Recursive "all" directory target.
-base/tests/all:
-.PHONY : base/tests/all
-
-# Recursive "preinstall" directory target.
-base/tests/preinstall:
-.PHONY : base/tests/preinstall
-
-# Recursive "clean" directory target.
-base/tests/clean:
-.PHONY : base/tests/clean
-
-#=============================================================================
-# Directory level rules for directory net
-
-# Recursive "all" directory target.
-net/all: net/CMakeFiles/muduo_net.dir/all
-net/all: net/tests/all
-.PHONY : net/all
-
-# Recursive "preinstall" directory target.
-net/preinstall: net/tests/preinstall
-.PHONY : net/preinstall
-
-# Recursive "clean" directory target.
-net/clean: net/CMakeFiles/muduo_net.dir/clean
-net/clean: net/tests/clean
-.PHONY : net/clean
-
-#=============================================================================
-# Directory level rules for directory net/tests
-
-# Recursive "all" directory target.
-net/tests/all: net/tests/CMakeFiles/eventloopthread_unittest.dir/all
-net/tests/all: net/tests/CMakeFiles/eventloop_unittest.dir/all
-net/tests/all: net/tests/CMakeFiles/test3.dir/all
-.PHONY : net/tests/all
-
-# Recursive "preinstall" directory target.
-net/tests/preinstall:
-.PHONY : net/tests/preinstall
-
-# Recursive "clean" directory target.
-net/tests/clean: net/tests/CMakeFiles/eventloopthread_unittest.dir/clean
-net/tests/clean: net/tests/CMakeFiles/eventloop_unittest.dir/clean
-net/tests/clean: net/tests/CMakeFiles/test3.dir/clean
-.PHONY : net/tests/clean
-
-#=============================================================================
-# Target rules for target base/CMakeFiles/muduo_base.dir
+# Target rules for target CMakeFiles/mymuduo.dir
 
 # All Build rule for target.
-base/CMakeFiles/muduo_base.dir/all:
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/depend
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erfenjiao/project/muduo/muduo/build/CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15 "Built target muduo_base"
-.PHONY : base/CMakeFiles/muduo_base.dir/all
+CMakeFiles/mymuduo.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erfenjiao/project/muduo/muduo/build/CMakeFiles --progress-num=1,2,3 "Built target mymuduo"
+.PHONY : CMakeFiles/mymuduo.dir/all
 
 # Build rule for subdir invocation for target.
-base/CMakeFiles/muduo_base.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 11
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 base/CMakeFiles/muduo_base.dir/all
+CMakeFiles/mymuduo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mymuduo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 0
-.PHONY : base/CMakeFiles/muduo_base.dir/rule
+.PHONY : CMakeFiles/mymuduo.dir/rule
 
 # Convenience name for target.
-muduo_base: base/CMakeFiles/muduo_base.dir/rule
-.PHONY : muduo_base
+mymuduo: CMakeFiles/mymuduo.dir/rule
+.PHONY : mymuduo
 
 # clean rule for target.
-base/CMakeFiles/muduo_base.dir/clean:
-	$(MAKE) $(MAKESILENT) -f base/CMakeFiles/muduo_base.dir/build.make base/CMakeFiles/muduo_base.dir/clean
-.PHONY : base/CMakeFiles/muduo_base.dir/clean
-
-#=============================================================================
-# Target rules for target net/CMakeFiles/muduo_net.dir
-
-# All Build rule for target.
-net/CMakeFiles/muduo_net.dir/all: base/CMakeFiles/muduo_base.dir/all
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/depend
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erfenjiao/project/muduo/muduo/build/CMakeFiles --progress-num=16,17,18,19,20,21 "Built target muduo_net"
-.PHONY : net/CMakeFiles/muduo_net.dir/all
-
-# Build rule for subdir invocation for target.
-net/CMakeFiles/muduo_net.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 17
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/CMakeFiles/muduo_net.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 0
-.PHONY : net/CMakeFiles/muduo_net.dir/rule
-
-# Convenience name for target.
-muduo_net: net/CMakeFiles/muduo_net.dir/rule
-.PHONY : muduo_net
-
-# clean rule for target.
-net/CMakeFiles/muduo_net.dir/clean:
-	$(MAKE) $(MAKESILENT) -f net/CMakeFiles/muduo_net.dir/build.make net/CMakeFiles/muduo_net.dir/clean
-.PHONY : net/CMakeFiles/muduo_net.dir/clean
-
-#=============================================================================
-# Target rules for target net/tests/CMakeFiles/eventloopthread_unittest.dir
-
-# All Build rule for target.
-net/tests/CMakeFiles/eventloopthread_unittest.dir/all: base/CMakeFiles/muduo_base.dir/all
-net/tests/CMakeFiles/eventloopthread_unittest.dir/all: net/CMakeFiles/muduo_net.dir/all
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloopthread_unittest.dir/build.make net/tests/CMakeFiles/eventloopthread_unittest.dir/depend
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloopthread_unittest.dir/build.make net/tests/CMakeFiles/eventloopthread_unittest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erfenjiao/project/muduo/muduo/build/CMakeFiles --progress-num=3,4 "Built target eventloopthread_unittest"
-.PHONY : net/tests/CMakeFiles/eventloopthread_unittest.dir/all
-
-# Build rule for subdir invocation for target.
-net/tests/CMakeFiles/eventloopthread_unittest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 19
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/tests/CMakeFiles/eventloopthread_unittest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 0
-.PHONY : net/tests/CMakeFiles/eventloopthread_unittest.dir/rule
-
-# Convenience name for target.
-eventloopthread_unittest: net/tests/CMakeFiles/eventloopthread_unittest.dir/rule
-.PHONY : eventloopthread_unittest
-
-# clean rule for target.
-net/tests/CMakeFiles/eventloopthread_unittest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloopthread_unittest.dir/build.make net/tests/CMakeFiles/eventloopthread_unittest.dir/clean
-.PHONY : net/tests/CMakeFiles/eventloopthread_unittest.dir/clean
-
-#=============================================================================
-# Target rules for target net/tests/CMakeFiles/eventloop_unittest.dir
-
-# All Build rule for target.
-net/tests/CMakeFiles/eventloop_unittest.dir/all: base/CMakeFiles/muduo_base.dir/all
-net/tests/CMakeFiles/eventloop_unittest.dir/all: net/CMakeFiles/muduo_net.dir/all
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/depend
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erfenjiao/project/muduo/muduo/build/CMakeFiles --progress-num=1,2 "Built target eventloop_unittest"
-.PHONY : net/tests/CMakeFiles/eventloop_unittest.dir/all
-
-# Build rule for subdir invocation for target.
-net/tests/CMakeFiles/eventloop_unittest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 19
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/tests/CMakeFiles/eventloop_unittest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 0
-.PHONY : net/tests/CMakeFiles/eventloop_unittest.dir/rule
-
-# Convenience name for target.
-eventloop_unittest: net/tests/CMakeFiles/eventloop_unittest.dir/rule
-.PHONY : eventloop_unittest
-
-# clean rule for target.
-net/tests/CMakeFiles/eventloop_unittest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/eventloop_unittest.dir/build.make net/tests/CMakeFiles/eventloop_unittest.dir/clean
-.PHONY : net/tests/CMakeFiles/eventloop_unittest.dir/clean
-
-#=============================================================================
-# Target rules for target net/tests/CMakeFiles/test3.dir
-
-# All Build rule for target.
-net/tests/CMakeFiles/test3.dir/all: base/CMakeFiles/muduo_base.dir/all
-net/tests/CMakeFiles/test3.dir/all: net/CMakeFiles/muduo_net.dir/all
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/depend
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/erfenjiao/project/muduo/muduo/build/CMakeFiles --progress-num=22,23 "Built target test3"
-.PHONY : net/tests/CMakeFiles/test3.dir/all
-
-# Build rule for subdir invocation for target.
-net/tests/CMakeFiles/test3.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 19
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 net/tests/CMakeFiles/test3.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/erfenjiao/project/muduo/muduo/build/CMakeFiles 0
-.PHONY : net/tests/CMakeFiles/test3.dir/rule
-
-# Convenience name for target.
-test3: net/tests/CMakeFiles/test3.dir/rule
-.PHONY : test3
-
-# clean rule for target.
-net/tests/CMakeFiles/test3.dir/clean:
-	$(MAKE) $(MAKESILENT) -f net/tests/CMakeFiles/test3.dir/build.make net/tests/CMakeFiles/test3.dir/clean
-.PHONY : net/tests/CMakeFiles/test3.dir/clean
+CMakeFiles/mymuduo.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/clean
+.PHONY : CMakeFiles/mymuduo.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
