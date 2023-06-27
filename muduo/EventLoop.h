@@ -13,6 +13,11 @@
 class Channel;
 class Poller;
 
+/*
+    EventLoop    对应 Reactor
+    epoll poller 对应 Demultiplex
+*/
+
 // 事件循环类 主要包含了两个大模块 Channel Poller(epoll的抽象)
 class EventLoop : noncopyable
 {
