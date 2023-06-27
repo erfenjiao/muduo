@@ -40,7 +40,7 @@ public:
     void tie(const std::shared_ptr<void>&);
 
     int fd()            const { return fd_;}
-    int event()         const {return events_;}
+    int events()         const {return events_;}
     int set_revents(int revt) {revents_ = revt;}
 
     // 设置fd相应的事件状态 相当于epoll_ctl add delete
