@@ -6,12 +6,12 @@
 #include "Logger.h"
 #include "Channel.h"
 
-// 三种状态
+// 三种 channel 状态
 const int kNew = -1;    // 某个channel还没添加至Poller          // channel的成员index_初始化为-1
 const int kAdded = 1;   // 某个channel已经添加至Poller
 const int kDeleted = 2; // 某个channel已经从Poller删除
 
-EPollPoller::EPollPoller(EventLoop *loop) : Poller(loop),
+EPollPoller::EPollPoller(EventLoop *loop) : Poller(loop),                  // 调用基类的初始化函数，初始化从基类继承过来的成员，包括：channelMap、EventLoop
                                             epollfd_(::epoll_create1(EPOLL_CLOEXEC)),
                                             events_(kInitEventListSize)     // vector<epoll_event>(16)
 {
@@ -62,7 +62,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelList *activeChannels)
     return now;
 }
 
-// channel update remove => EventLoop updateChannel removeChannel => Poller updateChannel removeChannel
+// 在channel update() remove()中调用 => EventLoop updateChannel removeChannel => Poller updateChannel removeChannel
 /*
     poller.poll() 通过监听到 epoll_wait fd 监听到 channel 发生的事件，.
                     EventLoop  =>  poller.poll()
@@ -73,6 +73,13 @@ void EPollPoller::updateChannel(Channel *channel)
 {
     const int index = channel->index();
     LOG_INFO("func=%s => fd=%d events=%d index=%d\n", __FUNCTION__, channel->fd(), channel->events(), index);
+
+    /*
+        // 三种 channel 状态
+        const int kNew = -1;    // 某个channel还没添加至Poller          // channel的成员index_初始化为-1
+        const int kAdded = 1;   // 某个channel已经添加至Poller
+        const int kDeleted = 2; // 某个channel已经从Poller删除
+    */
     if(index == kNew || index == kDeleted)     // 从来没有添加到poller 中，或者已经从poller中删除
     {
         if(index == kNew)                      // 从来没有添加到poller 中

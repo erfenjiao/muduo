@@ -27,7 +27,7 @@ public:
     Channel(EventLoop* loop, int fd);
     ~Channel();
 
-    // fd得到Poller通知以后 处理事件 handleEvent ,在 EventLoop::loop()中调用
+    // fd得到Poller通知以后 处理事件 handleEvent ,在 EventLoop::loop()中调用 
     void handleEvent(Timestamp receiveTime);
 
     // 设置回调函数对象 
@@ -36,16 +36,25 @@ public:
     void setCloseCallback(EventCallback cb)    { closeCallback_ = cb; }
     void setErrorCallback(EventCallback cb)    { errorCallback_ = cb; }
 
-    // 防止手动 remove Channel后仍在执行回调操作。
+    // 防止手动 remove Channel 后仍在执行回调操作。
+    // std::weak_ptr<void> tie_;        // 防止手动 remove Channel后仍在执行回调操作。
+    // bool tied_;
     void tie(const std::shared_ptr<void>&);
 
-    int fd()            const { return fd_;}
+    int fd()            const  { return fd_;}
     int events()         const {return events_;}
-    int set_revents(int revt) {revents_ = revt;}
+    // 为什么要设置这样一个方法？
+    // channel 不能监听自己发生了什么事件，poller在监听
+    int set_revents(int revt)  {revents_ = revt;}
 
-    // 设置fd相应的事件状态 相当于epoll_ctl add delete
-    void enableReading()  { events_ |= kReadEvent;   update(); }
-    void disableReading() { events_ &= ~kReadEvent;  update(); }
+    // 设置fd相应的事件状态 相当于 epoll_ctl add delete
+    /*
+        const int Channel::kNoneEvent = 0;
+        const int Channel::kReadEvent = EPOLLIN | EPOLLPRI;
+        const int Channel::kWriteEvent = EPOLLOUT;
+    */
+    void enableReading()  { events_ |= kReadEvent;   update(); }     // 让 fd 对读事件感兴趣
+    void disableReading() { events_ &= ~kReadEvent;  update(); }     // ～：使得read的那一位是0,，再&=上其他位，把相应的位置成0,去掉，
     void enableWriting()  { events_ |= kWriteEvent;  update(); }
     void disableWriting() { events_ &= ~kWriteEvent; update(); }
     void disableAll()     { events_  = kNoneEvent;   update(); }
@@ -55,12 +64,13 @@ public:
     bool isWriting()   const { return events_ & kWriteEvent; }
     bool isReading()   const { return events_ & kReadEvent;  }
 
+    // 与业务相关
     int index() { return index_; }
     void set_index(int idx) { index_ = idx; }
 
     // one loop per thread
     EventLoop *ownerLoop() { return loop_; }
-    void remove();
+    void remove();   // 删除 channel
 
 private:
     void update(); 
@@ -75,7 +85,7 @@ private:
 
     const int fd_;                   // fd，Poller监听的对象
     int events_;                     // 注册fd感兴趣的事件
-    int revents_;                    // Poller返回的具体发生的事件
+    int revents_;                    // Poller 返回的具体发生的事件,channel
     int index_;
 
     std::weak_ptr<void> tie_;        // 防止手动 remove Channel后仍在执行回调操作。
