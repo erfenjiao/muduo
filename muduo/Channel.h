@@ -64,7 +64,7 @@ public:
     bool isWriting()   const { return events_ & kWriteEvent; }
     bool isReading()   const { return events_ & kReadEvent;  }
 
-    // 与业务相关
+    // 与业务相关，表示 channel 在 poll 中的状态
     int index() { return index_; }
     void set_index(int idx) { index_ = idx; }
 

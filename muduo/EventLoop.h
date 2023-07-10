@@ -68,7 +68,7 @@ private:
     std::unique_ptr<Channel> wakeupChannel_;   // wakeupFd_ 存储在这个 channel 里面
 
     ChannelList activeChannels_;
-    Channel* currentActiveChannel;
+    Channel* currentActiveChannel_;
 
     std::atomic_bool callingPendingFunctors_; // 标识当前 loop 是否有需要执行的回调操作
     std::vector<Functor> pendingFunctors_;    // 存储 loop 需要执行的所有回调操作

@@ -52,7 +52,7 @@ void Channel::update()
 {
     // 通过 channel 所属的 eventloop ，调用 poller 的相应方法，注册 fd 的 events 事件
     // add code...
-    // loop_->updateChannel(this);  直接传入channel，通过 eventloop 进行操作。
+    loop_->updateChannel(this);  //直接传入channel，通过 eventloop 进行操作。
 }
 
 
@@ -60,7 +60,7 @@ void Channel::update()
 void Channel::remove()
 {
     // add code...
-    // loop_->removeChannel(this);
+    loop_->removeChannel(this);
 }
 
 // fd 得到 Poller 通知以后，处理事件 handleEvent ,在 EventLoop::loop()中调用 

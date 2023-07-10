@@ -62,7 +62,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelList *activeChannels)
     return now;
 }
 
-// 在channel update() remove()中调用 => EventLoop updateChannel removeChannel => Poller updateChannel removeChannel
+// 调用链：在channel update() remove()中调用 => EventLoop updateChannel removeChannel => Poller updateChannel removeChannel
 /*
     poller.poll() 通过监听到 epoll_wait fd 监听到 channel 发生的事件，.
                     EventLoop  =>  poller.poll()
@@ -71,6 +71,7 @@ Timestamp EPollPoller::poll(int timeoutMs, ChannelList *activeChannels)
 */
 void EPollPoller::updateChannel(Channel *channel)
 {
+    // index 初始化为-1 kNew
     const int index = channel->index();
     LOG_INFO("func=%s => fd=%d events=%d index=%d\n", __FUNCTION__, channel->fd(), channel->events(), index);
 
@@ -93,7 +94,7 @@ void EPollPoller::updateChannel(Channel *channel)
     else                                       // channel已经在Poller中注册过了
     {
         int fd = channel->fd();
-        if(channel->isNoneEvent())             // 对任何事件都不感兴趣
+        if(channel->isNoneEvent())             // 对任何事件都不感兴趣，相当于要删除
         {
             update(EPOLL_CTL_DEL, channel);    // 删除
             channel->set_index(kDeleted);
